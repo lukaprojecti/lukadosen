@@ -6,7 +6,7 @@ import { getPayload } from "payload";
 import configPromise from "@payload-config";
 
 const nohemi = localFont({
-  src: "../fonts/Nohemi-Light.woff",
+  src: "../../fonts/Nohemi-Light.woff",
   weight: "300",
   style: "normal",
   display: "swap",
