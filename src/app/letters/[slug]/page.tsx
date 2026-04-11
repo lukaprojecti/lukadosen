@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { notFound } from 'next/navigation'
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
@@ -143,7 +144,7 @@ export default async function LetterPage({
           Back link
          ════════════════════════════════════════════ */}
       <section style={{ paddingLeft: 40, paddingRight: 40, paddingBottom: 40 }}>
-        <a
+        <Link
           href="/letters"
           style={{
             display: 'inline-flex',
@@ -160,7 +161,7 @@ export default async function LetterPage({
             <path d="M19 12H5" /><path d="M12 19l-7-7 7-7" />
           </svg>
           All letters
-        </a>
+        </Link>
       </section>
 
       {/* ════════════════════════════════════════════
