@@ -1,6 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { Reveal } from "@/components/Reveal";
+import { fadeUp, easing } from "@/lib/motion";
+import Image from "next/image";
 
 /* ── Types ── */
 
@@ -71,6 +75,7 @@ function SubscribeForm() {
         </svg>
       </div>
       <button
+        className="btn-hover"
         style={{
           fontSize: 15,
           fontWeight: 300,
@@ -139,7 +144,7 @@ function LetterRow({ letter }: { letter: Letter }) {
       <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
         <h3
           style={{
-            fontSize: 17,
+            fontSize: 16,
             fontWeight: 300,
             letterSpacing: "-0.01em",
             color: "var(--foreground)",
@@ -186,7 +191,7 @@ function LetterRow({ letter }: { letter: Letter }) {
             marginTop: 6,
             fontSize: 14,
             fontWeight: 300,
-            lineHeight: 1.6,
+            lineHeight: 1.3,
             color: "var(--muted)",
           }}
         >
@@ -212,65 +217,67 @@ export default function LettersClient({ letters }: { letters: Letter[] }) {
       {/* ════════════════════════════════════════════
           SECTION 1 — Title + category tabs
          ════════════════════════════════════════════ */}
-      <section
-        style={{
-          paddingTop: 80,
-          paddingBottom: 40,
-          paddingLeft: 40,
-          paddingRight: 40,
-        }}
-      >
-        <Badge>Letters</Badge>
-
-        <h1
+      <Reveal>
+        <section
           style={{
-            marginTop: 20,
-            fontSize: "clamp(36px, 5vw, 56px)",
-            fontWeight: 300,
-            letterSpacing: "-0.02em",
-            lineHeight: 1.1,
+            paddingTop: 80,
+            paddingBottom: 40,
+            paddingLeft: 40,
+            paddingRight: 40,
           }}
         >
-          All letters.
-        </h1>
+          <Badge>Letters</Badge>
 
-        {/* Category tabs */}
-        <div
-          style={{
-            display: "flex",
-            gap: 4,
-            flexWrap: "wrap",
-            marginTop: 32,
-          }}
-        >
-          {CATEGORIES.map((cat) => {
-            const isActive = activeCategory === cat.value;
-            return (
-              <button
-                key={cat.value}
-                onClick={() => setActiveCategory(cat.value)}
-                style={{
-                  fontSize: 14,
-                  fontWeight: 300,
-                  padding: "6px 16px",
-                  border: "none",
-                  borderRadius: "var(--radius)",
-                  background: isActive ? "var(--foreground)" : "var(--surface)",
-                  color: isActive ? "var(--background)" : "var(--muted)",
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  transition: "background 0.15s, color 0.15s",
-                }}
-              >
-                {cat.label}
-              </button>
-            );
-          })}
-        </div>
-      </section>
+          <h1
+            style={{
+              marginTop: 20,
+              fontSize: "clamp(36px, 5vw, 56px)",
+              fontWeight: 300,
+              letterSpacing: "-0.02em",
+              lineHeight: 1.1,
+            }}
+          >
+            All letters.
+          </h1>
+
+          {/* Category tabs */}
+          <div
+            style={{
+              display: "flex",
+              gap: 4,
+              flexWrap: "wrap",
+              marginTop: 32,
+            }}
+          >
+            {CATEGORIES.map((cat) => {
+              const isActive = activeCategory === cat.value;
+              return (
+                <button
+                  key={cat.value}
+                  onClick={() => setActiveCategory(cat.value)}
+                  style={{
+                    fontSize: 14,
+                    fontWeight: 300,
+                    padding: "6px 16px",
+                    border: "none",
+                    borderRadius: "var(--radius)",
+                    background: isActive ? "var(--foreground)" : "var(--surface)",
+                    color: isActive ? "var(--background)" : "var(--muted)",
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                    transition: "background 0.2s, color 0.2s",
+                  }}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      </Reveal>
 
       {/* ════════════════════════════════════════════
-          SECTION 2 — Letter list
+          SECTION 2 — Letter list with animation
          ════════════════════════════════════════════ */}
       <section
         style={{
@@ -280,7 +287,10 @@ export default function LettersClient({ letters }: { letters: Letter[] }) {
         }}
       >
         {filtered.length === 0 ? (
-          <p
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
             style={{
               padding: "40px 24px",
               fontSize: 15,
@@ -289,78 +299,94 @@ export default function LettersClient({ letters }: { letters: Letter[] }) {
             }}
           >
             No letters in this category yet.
-          </p>
+          </motion.p>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {filtered.map((letter, i) => (
-              <div key={letter.id}>
-                <LetterRow letter={letter} />
-                {i < filtered.length - 1 && (
-                  <div
-                    style={{
-                      height: 1,
-                      backgroundColor: "var(--border)",
-                      marginLeft: 24,
-                      marginRight: 24,
-                    }}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3, ease: easing.smooth }}
+              style={{ display: "flex", flexDirection: "column", gap: 2 }}
+            >
+              {filtered.map((letter, i) => (
+                <motion.div
+                  key={letter.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: i * 0.05, ease: easing.smooth }}
+                >
+                  <LetterRow letter={letter} />
+                  {i < filtered.length - 1 && (
+                    <div
+                      style={{
+                        height: 1,
+                        backgroundColor: "var(--border)",
+                        marginLeft: 24,
+                        marginRight: 24,
+                      }}
+                    />
+                  )}
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         )}
       </section>
 
       {/* ════════════════════════════════════════════
           SECTION 3 — Subscribe CTA
          ════════════════════════════════════════════ */}
-      <section
-        style={{
-          paddingLeft: 40,
-          paddingRight: 40,
-          paddingBottom: 80,
-        }}
-      >
-        <Badge>Get Inside</Badge>
-
-        <div
+      <Reveal>
+        <section
           style={{
-            marginTop: 20,
-            width: "100%",
-            backgroundColor: "var(--surface)",
-            borderRadius: "var(--radius)",
-            padding: 40,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
+            paddingLeft: 40,
+            paddingRight: 40,
+            paddingBottom: 80,
           }}
         >
-          <h2 style={{ maxWidth: 480 }}>
-            New letters land every week. Don&apos;t miss the next one.
-          </h2>
+          <Badge>Get Inside</Badge>
 
-          <p style={{ marginTop: 12, fontSize: 18, fontWeight: 300 }}>
-            <span style={{ marginRight: 6 }}>&rarr;</span>
-            <em>Short, honest, always practical.</em>
-          </p>
-
-          <div style={{ marginTop: 28, display: "flex", justifyContent: "center", width: "100%" }}>
-            <SubscribeForm />
-          </div>
-
-          <p
+          <div
             style={{
-              marginTop: 14,
-              fontSize: 13,
-              color: "var(--muted)",
-              letterSpacing: "0.01em",
+              marginTop: 20,
+              width: "100%",
+              backgroundColor: "var(--surface)",
+              borderRadius: "var(--radius)",
+              padding: 40,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
             }}
           >
-            No spam, unsubscribe anytime.
-          </p>
-        </div>
-      </section>
+            <h2 style={{ maxWidth: 480 }}>
+              New letters land every week. Don&apos;t miss the next one.
+            </h2>
+
+            <p style={{ marginTop: 12, fontSize: 18, fontWeight: 300 }}>
+              <span style={{ marginRight: 6 }}>&rarr;</span>
+              <em>Short, honest, always practical.</em>
+            </p>
+
+            <div style={{ marginTop: 28, display: "flex", justifyContent: "center", width: "100%" }}>
+              <SubscribeForm />
+            </div>
+
+            <p
+              style={{
+                marginTop: 14,
+                fontSize: 13,
+                color: "var(--muted)",
+                letterSpacing: "0.01em",
+              }}
+            >
+              No spam, unsubscribe anytime.
+            </p>
+          </div>
+        </section>
+      </Reveal>
 
       {/* ════════════════════════════════════════════
           SECTION 4 — Footer
@@ -371,22 +397,18 @@ export default function LettersClient({ letters }: { letters: Letter[] }) {
           flexDirection: "column",
           alignItems: "center",
           textAlign: "center",
-          paddingTop: 48,
+          paddingTop: 24,
           paddingBottom: 24,
         }}
       >
         <div style={{ height: 32, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <span
-            style={{
-              fontSize: 24,
-              fontWeight: 300,
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              color: "var(--foreground)",
-            }}
-          >
-            LUKA
-          </span>
+          <Image
+            src="/Luka_positiv_transparent.png"
+            alt="Luka"
+            width={80}
+            height={32}
+            style={{ objectFit: "contain" }}
+          />
         </div>
 
         <nav style={{ display: "flex", gap: 24, marginTop: 20 }}>
@@ -399,12 +421,13 @@ export default function LettersClient({ letters }: { letters: Letter[] }) {
             <a
               key={link.label}
               href={link.href}
+              className="nav-link-hover"
               style={{
                 fontSize: 14,
                 fontWeight: 300,
                 color: "var(--muted)",
                 textDecoration: "none",
-                transition: "color 0.15s",
+                transition: "color 0.2s ease-out",
               }}
               onMouseEnter={(e) => { e.currentTarget.style.color = "var(--foreground)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.color = "var(--muted)"; }}

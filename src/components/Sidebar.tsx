@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 /* ── Icon components ── */
 
@@ -58,25 +57,6 @@ function EmailIcon({ size = 16 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <rect x="2" y="4" width="20" height="16" rx="2" />
       <polyline points="2 7 12 13 22 7" />
-    </svg>
-  );
-}
-
-function MenuIcon({ size = 24 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="3" y1="6" x2="21" y2="6" />
-      <line x1="3" y1="12" x2="21" y2="12" />
-      <line x1="3" y1="18" x2="21" y2="18" />
-    </svg>
-  );
-}
-
-function CloseIcon({ size = 24 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
   );
 }
@@ -302,7 +282,6 @@ function SidebarContent({ onNavigate, lettersCount }: { onNavigate?: () => void;
 /* ── Main Sidebar component ── */
 
 export default function Sidebar({ lettersCount }: { lettersCount?: number }) {
-  const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
   return (
@@ -401,57 +380,43 @@ export default function Sidebar({ lettersCount }: { lettersCount?: number }) {
         </div>
       </aside>
 
-      {/* ── Mobile top bar (<768px) ── */}
-      <header className="mobile-header">
-        <span style={{ fontSize: 16, fontWeight: 300, color: "var(--foreground)" }}>
-          Luka Došen
-        </span>
-        <button
-          onClick={() => setMobileOpen(true)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: 40,
-            height: 40,
-            background: "none",
-            border: "none",
-            color: "var(--foreground)",
-            cursor: "pointer",
-          }}
-          aria-label="Open menu"
-        >
-          <MenuIcon />
-        </button>
-      </header>
-
-      {/* ── Mobile overlay ── */}
-      {mobileOpen && (
-        <div className="mobile-overlay">
-          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 16 }}>
-            <button
-              onClick={() => setMobileOpen(false)}
+      {/* ── Mobile bottom tab bar (<768px) ── */}
+      <nav className="mobile-bottom-bar">
+        {[...navLinks, ...socialLinks].map((link) => {
+          const isActive = pathname === link.href;
+          const isExternal = link.href.startsWith("http") || link.href.startsWith("mailto:");
+          const Icon = link.icon;
+          return (
+            <a
+              key={link.href}
+              href={link.href}
+              target={isExternal && !link.href.startsWith("mailto:") ? "_blank" : undefined}
+              rel={isExternal && !link.href.startsWith("mailto:") ? "noopener noreferrer" : undefined}
               style={{
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                width: 40,
-                height: 40,
-                background: "none",
-                border: "none",
-                color: "var(--foreground)",
-                cursor: "pointer",
+                minWidth: 64,
+                padding: "8px 12px",
+                gap: 4,
+                textDecoration: "none",
+                color: isActive ? "var(--foreground)" : "var(--muted)",
+                fontSize: 11,
+                fontWeight: 300,
+                fontFamily: "inherit",
+                borderRadius: "var(--radius)",
+                backgroundColor: isActive ? "var(--background)" : "transparent",
+                transition: "color 0.2s, background-color 0.2s",
+                flexShrink: 0,
               }}
-              aria-label="Close menu"
             >
-              <CloseIcon />
-            </button>
-          </div>
-          <div style={{ flex: 1, overflowY: "auto" }}>
-            <SidebarContent onNavigate={() => setMobileOpen(false)} lettersCount={lettersCount} />
-          </div>
-        </div>
-      )}
+              <Icon size={20} />
+              <span>{link.label}</span>
+            </a>
+          );
+        })}
+      </nav>
     </>
   );
 }

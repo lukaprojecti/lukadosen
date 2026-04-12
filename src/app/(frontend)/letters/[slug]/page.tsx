@@ -257,22 +257,18 @@ export default async function LetterPage({
           flexDirection: 'column',
           alignItems: 'center',
           textAlign: 'center',
-          paddingTop: 48,
+          paddingTop: 24,
           paddingBottom: 24,
         }}
       >
         <div style={{ height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <span
-            style={{
-              fontSize: 24,
-              fontWeight: 300,
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: 'var(--foreground)',
-            }}
-          >
-            LUKA
-          </span>
+          <img
+            src="/Luka_positiv_transparent.png"
+            alt="Luka"
+            width={80}
+            height={32}
+            style={{ objectFit: 'contain' }}
+          />
         </div>
 
         <nav style={{ display: 'flex', gap: 24, marginTop: 20 }}>
