@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "motion/react";
 import { Reveal } from "@/components/Reveal";
 import { fadeUp } from "@/lib/motion";
+import { useSubscribe } from "@/lib/useSubscribe";
 import Image from "next/image";
 import { type Letter } from "./letters/LettersClient";
 
@@ -27,60 +29,93 @@ function Badge({ children }: { children: React.ReactNode }) {
   );
 }
 
-function SubscribeForm() {
+function SubscribeForm({ source }: { source: string }) {
+  const [email, setEmail] = useState("");
+  const { status, message, submit } = useSubscribe(source);
+  const busy = status === "loading";
+  const done = status === "success";
+
   return (
-    <div style={{ display: "flex", gap: 0, maxWidth: 420, width: "100%" }}>
-      <div style={{ position: "relative", flex: 1 }}>
-        <input
-          type="email"
-          placeholder="Your email"
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!busy && !done) submit(email);
+      }}
+      style={{ width: "100%", maxWidth: 420 }}
+    >
+      <div style={{ display: "flex", gap: 0, width: "100%" }}>
+        <div style={{ position: "relative", flex: 1 }}>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={busy || done}
+            placeholder="Your email"
+            aria-label="Your email"
+            style={{
+              width: "100%",
+              fontSize: 15,
+              fontWeight: 300,
+              padding: "12px 40px 12px 16px",
+              border: "1px solid var(--border)",
+              borderRight: "none",
+              borderRadius: "var(--radius) 0 0 var(--radius)",
+              background: "var(--surface)",
+              color: "var(--foreground)",
+              outline: "none",
+              fontFamily: "inherit",
+            }}
+          />
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--muted)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)" }}
+          >
+            <path d="M5 12h14" />
+            <path d="M12 5l7 7-7 7" />
+          </svg>
+        </div>
+        <button
+          className="btn-hover"
+          type="submit"
+          disabled={busy || done}
           style={{
-            width: "100%",
             fontSize: 15,
             fontWeight: 300,
-            padding: "12px 40px 12px 16px",
-            border: "1px solid var(--border)",
-            borderRight: "none",
-            borderRadius: "var(--radius) 0 0 var(--radius)",
-            background: "var(--surface)",
-            color: "var(--foreground)",
-            outline: "none",
+            padding: "12px 24px",
+            border: "none",
+            borderRadius: "0 var(--radius) var(--radius) 0",
+            background: "var(--foreground)",
+            color: "var(--accent)",
+            cursor: busy || done ? "default" : "pointer",
+            whiteSpace: "nowrap",
             fontFamily: "inherit",
+            opacity: busy || done ? 0.75 : 1,
           }}
-        />
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="var(--muted)"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)" }}
         >
-          <path d="M5 12h14" />
-          <path d="M12 5l7 7-7 7" />
-        </svg>
+          {busy ? "…" : done ? "Joined ✓" : "Subscribe"}
+        </button>
       </div>
-      <button
-        className="btn-hover"
-        style={{
-          fontSize: 15,
-          fontWeight: 300,
-          padding: "12px 24px",
-          border: "none",
-          borderRadius: "0 var(--radius) var(--radius) 0",
-          background: "var(--foreground)",
-          color: "var(--accent)",
-          cursor: "pointer",
-          whiteSpace: "nowrap",
-          fontFamily: "inherit",
-        }}
-      >
-        Subscribe
-      </button>
-    </div>
+      {message && (
+        <p
+          style={{
+            marginTop: 10,
+            fontSize: 13,
+            fontWeight: 300,
+            textAlign: "center",
+            color: status === "error" ? "#b23b3b" : "var(--muted)",
+          }}
+        >
+          {message}
+        </p>
+      )}
+    </form>
   );
 }
 
@@ -267,7 +302,7 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
           </p>
 
           <div style={{ marginTop: 28, display: "flex", justifyContent: "center", width: "100%" }}>
-            <SubscribeForm />
+            <SubscribeForm source="homepage-hero" />
           </div>
 
           <p
@@ -553,7 +588,7 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
             </p>
 
             <div style={{ marginTop: 28, display: "flex", justifyContent: "center", width: "100%" }}>
-              <SubscribeForm />
+              <SubscribeForm source="homepage-cta" />
             </div>
 
             <p

@@ -5,6 +5,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import sharp from 'sharp'
 import { Letters } from './collections/Letters'
+import { Subscribers } from './collections/Subscribers'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -14,6 +15,7 @@ export default buildConfig({
   editor: lexicalEditor(),
   collections: [
     Letters,
+    Subscribers,
   ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

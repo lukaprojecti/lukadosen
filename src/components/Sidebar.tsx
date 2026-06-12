@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSubscribe } from "@/lib/useSubscribe";
 
 /* ── Icon components ── */
 
@@ -74,6 +76,78 @@ const socialLinks = [
   { href: "https://substack.com/@lukadosen?utm_campaign=profile&utm_medium=profile-page", label: "Substack", icon: SubstackIcon },
   { href: "mailto:hello@lukadosen.ch", label: "Email", icon: EmailIcon },
 ];
+
+/* ── "Get Inside" subscribe box ── */
+
+function SidebarSubscribe() {
+  const [email, setEmail] = useState("");
+  const { status, message, submit } = useSubscribe("sidebar");
+  const busy = status === "loading";
+  const done = status === "success";
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!busy && !done) submit(email);
+      }}
+      style={{ display: "flex", flexDirection: "column", gap: 6 }}
+    >
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        disabled={busy || done}
+        placeholder="your@email.com"
+        aria-label="Your email"
+        style={{
+          width: "100%",
+          fontSize: 13,
+          fontWeight: 300,
+          padding: "8px 10px",
+          outline: "none",
+          border: "1px solid rgba(0,0,0,0.1)",
+          borderRadius: "var(--radius)",
+          background: "rgba(255,255,255,0.5)",
+          color: "var(--foreground)",
+          fontFamily: "inherit",
+          boxSizing: "border-box",
+        }}
+      />
+      <button
+        type="submit"
+        disabled={busy || done}
+        style={{
+          width: "100%",
+          fontSize: 13,
+          fontWeight: 300,
+          padding: "8px 14px",
+          border: "none",
+          borderRadius: "var(--radius)",
+          background: "var(--foreground)",
+          color: "var(--accent)",
+          cursor: busy || done ? "default" : "pointer",
+          fontFamily: "inherit",
+          opacity: busy || done ? 0.75 : 1,
+        }}
+      >
+        {busy ? "…" : done ? "Joined ✓" : "Subscribe"}
+      </button>
+      {message && (
+        <p
+          style={{
+            fontSize: 11,
+            fontWeight: 300,
+            lineHeight: 1.3,
+            color: status === "error" ? "#b23b3b" : "var(--muted)",
+          }}
+        >
+          {message}
+        </p>
+      )}
+    </form>
+  );
+}
 
 /* ── Sidebar content (shared between desktop and mobile overlay) ── */
 
@@ -239,41 +313,7 @@ function SidebarContent({ onNavigate, lettersCount }: { onNavigate?: () => void;
         >
           Get Inside
         </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          <input
-            type="email"
-            placeholder="your@email.com"
-            style={{
-              width: "100%",
-              fontSize: 13,
-              fontWeight: 300,
-              padding: "8px 10px",
-              outline: "none",
-              border: "1px solid rgba(0,0,0,0.1)",
-              borderRadius: "var(--radius)",
-              background: "rgba(255,255,255,0.5)",
-              color: "var(--foreground)",
-              fontFamily: "inherit",
-              boxSizing: "border-box",
-            }}
-          />
-          <button
-            style={{
-              width: "100%",
-              fontSize: 13,
-              fontWeight: 300,
-              padding: "8px 14px",
-              border: "none",
-              borderRadius: "var(--radius)",
-              background: "var(--foreground)",
-              color: "var(--accent)",
-              cursor: "pointer",
-              fontFamily: "inherit",
-            }}
-          >
-            Subscribe
-          </button>
-        </div>
+        <SidebarSubscribe />
       </div>
     </div>
   );
