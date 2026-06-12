@@ -116,19 +116,29 @@ export default function About() {
       </Reveal>
 
       {/* ════════════════════════════════════════════
-          SECTION 2 — Portrait (1:1 square)
+          SECTION 2 — Portrait (4:3, full height fixed, sides cropped)
          ════════════════════════════════════════════ */}
       <Reveal>
         <section style={{ paddingBottom: 56 }}>
           <div
             style={{
+              position: "relative",
               width: "100%",
-              aspectRatio: "1 / 1",
+              aspectRatio: "4 / 3",
               borderRadius: "var(--radius)",
               backgroundColor: "#d9d9d0",
               overflow: "hidden",
             }}
-          />
+          >
+            <Image
+              src="/2026-portrait-luka.jpg"
+              alt="Luka Došen, real estate planner and founder of Projecti"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 680px"
+              style={{ objectFit: "cover", objectPosition: "center" }}
+            />
+          </div>
         </section>
       </Reveal>
 

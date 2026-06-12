@@ -359,15 +359,25 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
               alignItems: "start",
             }}
           >
-            {/* Left: 9:16 portrait placeholder */}
+            {/* Left: portrait — full height fixed, left/right cropped */}
             <div
               style={{
+                position: "relative",
+                overflow: "hidden",
                 backgroundColor: "#d9d9d0",
                 borderRadius: "var(--radius)",
                 aspectRatio: "9 / 16",
                 width: "100%",
               }}
-            />
+            >
+              <Image
+                src="/2026-portrait-luka.jpg"
+                alt="Luka Došen, real estate planner and founder of Projecti"
+                fill
+                sizes="(max-width: 1024px) 50vw, 320px"
+                style={{ objectFit: "cover", objectPosition: "center" }}
+              />
+            </div>
 
             {/* Right: 3 benefits stacked vertically */}
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>

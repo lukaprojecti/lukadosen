@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSubscribe } from "@/lib/useSubscribe";
@@ -159,13 +160,17 @@ function SidebarContent({ onNavigate, lettersCount }: { onNavigate?: () => void;
 
       {/* Profile — portrait left, name + tagline right */}
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
-        <div
+        <Image
+          src="/2026-portrait-luka-square.jpg"
+          alt="Luka Došen"
+          width={48}
+          height={48}
+          priority
           style={{
-            width: 48,
-            height: 48,
             flexShrink: 0,
             borderRadius: "var(--radius)",
-            backgroundColor: "#d5d4d0",
+            objectFit: "cover",
+            display: "block",
           }}
         />
         <div>
@@ -334,14 +339,18 @@ export default function Sidebar({ lettersCount }: { lettersCount?: number }) {
       {/* ── Tablet sidebar (768px - 1023px) ── */}
       <aside className="sidebar-tablet">
         {/* Mini profile photo — square with --radius */}
-        <div
+        <Image
+          src="/2026-portrait-luka-square.jpg"
+          alt="Luka Došen"
+          width={40}
+          height={40}
+          priority
           style={{
-            width: 40,
-            height: 40,
-            borderRadius: "var(--radius)",
-            backgroundColor: "#d5d4d0",
             marginBottom: 24,
             flexShrink: 0,
+            borderRadius: "var(--radius)",
+            objectFit: "cover",
+            display: "block",
           }}
         />
 
