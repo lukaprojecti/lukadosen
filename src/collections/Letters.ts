@@ -70,6 +70,14 @@ export const Letters: CollectionConfig = {
       },
     },
     {
+      name: 'thumbnail',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Cover image shown on the letters list and at the top of the article. Set alt text on the image itself.',
+      },
+    },
+    {
       name: 'content',
       type: 'richText',
     },
