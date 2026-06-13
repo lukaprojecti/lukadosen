@@ -349,25 +349,26 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
             documenting the path from planner to developer, sharing everything I learn along the way.
           </p>
 
-          {/* 4. Two columns: portrait left (9:16 vertical), benefits right */}
+          {/* 4. Two columns: portrait left, benefits right — equal height */}
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               gap: 24,
               marginTop: 32,
-              alignItems: "start",
+              alignItems: "stretch",
             }}
           >
-            {/* Left: portrait — full height fixed, left/right cropped */}
+            {/* Left: portrait — matches the benefit column height; sides crop */}
             <div
               style={{
                 position: "relative",
                 overflow: "hidden",
                 backgroundColor: "#d9d9d0",
                 borderRadius: "var(--radius)",
-                aspectRatio: "9 / 16",
                 width: "100%",
+                height: "100%",
+                minHeight: 320,
               }}
             >
               <Image
@@ -406,7 +407,7 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
                   <p
                     style={{
                       fontSize: 16,
-                      fontWeight: 300,
+                      fontWeight: 600,
                       letterSpacing: "-0.01em",
                       lineHeight: 1.3,
                       color: "var(--foreground)",
@@ -529,13 +530,16 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
               textAlign: "center",
             }}
           >
-            <div
+            <Image
+              src="/testimonial-carlo-gambon.jpg"
+              alt="Carlo Gambon, private owner"
+              width={96}
+              height={96}
               style={{
-                width: 96,
-                height: 96,
                 borderRadius: "var(--radius)",
-                backgroundColor: "#d9d9d0",
+                objectFit: "cover",
                 flexShrink: 0,
+                display: "block",
               }}
             />
 
