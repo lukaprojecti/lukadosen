@@ -136,12 +136,14 @@ function LetterRow({ letter }: { letter: Letter }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Thumbnail — placeholder until per-letter images exist */}
+      {/* Thumbnail — fixed 4:3 (matches the homepage cards); placeholder until
+          per-letter images exist */}
       <div
         style={{
           flexShrink: 0,
+          alignSelf: "flex-start",
           width: "clamp(120px, 22vw, 190px)",
-          minHeight: 110,
+          aspectRatio: "4 / 3",
           borderRadius: "calc(var(--radius) - 2px)",
           backgroundColor: "#d9d9d0",
           overflow: "hidden",
