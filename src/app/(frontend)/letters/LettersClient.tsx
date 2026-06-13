@@ -105,13 +105,6 @@ const CATEGORIES = [
   { value: "my-agency", label: "My Agency" },
 ];
 
-const CATEGORY_LABELS: Record<string, string> = {
-  development: "Development",
-  architecture: "Architecture",
-  construction: "Construction",
-  "my-agency": "My Agency",
-};
-
 function formatDate(dateStr?: string) {
   if (!dateStr) return "";
   return new Date(dateStr).toLocaleDateString("en-CH", {
@@ -130,8 +123,10 @@ function LetterRow({ letter }: { letter: Letter }) {
     <a
       href={`/letters/${letter.slug}`}
       style={{
-        display: "block",
-        padding: "20px 24px",
+        display: "flex",
+        gap: 20,
+        alignItems: "stretch",
+        padding: 16,
         borderRadius: "var(--radius)",
         backgroundColor: hovered ? "var(--surface)" : "transparent",
         textDecoration: "none",
@@ -141,63 +136,60 @@ function LetterRow({ letter }: { letter: Letter }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
+      {/* Thumbnail — placeholder until per-letter images exist */}
+      <div
+        style={{
+          flexShrink: 0,
+          width: "clamp(120px, 22vw, 190px)",
+          minHeight: 110,
+          borderRadius: "calc(var(--radius) - 2px)",
+          backgroundColor: "#d9d9d0",
+          overflow: "hidden",
+        }}
+      />
+
+      {/* Content — title, description, then date pinned to the bottom */}
+      <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
         <h3
           style={{
             fontSize: 16,
             fontWeight: 300,
             letterSpacing: "-0.01em",
+            lineHeight: 1.3,
             color: "var(--foreground)",
-            flex: 1,
-            minWidth: 200,
           }}
         >
           {letter.title}
         </h3>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
-          {letter.category && (
-            <span
-              style={{
-                fontSize: 12,
-                fontWeight: 300,
-                padding: "3px 10px",
-                borderRadius: "var(--radius)",
-                backgroundColor: "var(--border)",
-                color: "var(--foreground)",
-                letterSpacing: "0.01em",
-              }}
-            >
-              {CATEGORY_LABELS[letter.category]}
-            </span>
-          )}
-          {letter.publishedAt && (
-            <span
-              style={{
-                fontSize: 13,
-                fontWeight: 300,
-                color: "var(--muted)",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {formatDate(letter.publishedAt)}
-            </span>
-          )}
-        </div>
-      </div>
 
-      {letter.excerpt && (
-        <p
-          style={{
-            marginTop: 6,
-            fontSize: 14,
-            fontWeight: 300,
-            lineHeight: 1.3,
-            color: "var(--muted)",
-          }}
-        >
-          {letter.excerpt}
-        </p>
-      )}
+        {letter.excerpt && (
+          <p
+            style={{
+              marginTop: 8,
+              fontSize: 14,
+              fontWeight: 300,
+              lineHeight: 1.4,
+              color: "var(--muted)",
+            }}
+          >
+            {letter.excerpt}
+          </p>
+        )}
+
+        {letter.publishedAt && (
+          <span
+            style={{
+              marginTop: "auto",
+              paddingTop: 12,
+              fontSize: 13,
+              fontWeight: 300,
+              color: "var(--muted)",
+            }}
+          >
+            {formatDate(letter.publishedAt)}
+          </span>
+        )}
+      </div>
     </a>
   );
 }
