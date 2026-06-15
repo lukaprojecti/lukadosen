@@ -42,6 +42,10 @@ export default buildConfig({
             collections: {
               media: true,
             },
+            // Upload straight from the browser to Supabase via a presigned URL.
+            // Required on Vercel: server-side uploads route the file through the
+            // serverless function, which hard-caps request bodies at 4.5 MB.
+            clientUploads: true,
             bucket: process.env.S3_BUCKET as string,
             config: {
               endpoint: process.env.S3_ENDPOINT,
