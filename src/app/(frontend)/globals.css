@@ -368,8 +368,19 @@ small,
   margin-bottom: 1.4em;
 }
 
+/* Tailwind's reset strips list markers globally — restore them here */
+.letter-content ul {
+  list-style: disc outside;
+}
+.letter-content ol {
+  list-style: decimal outside;
+}
+
 .letter-content li {
   margin-bottom: 0.4em;
+}
+.letter-content li::marker {
+  color: var(--foreground);
 }
 
 .letter-content blockquote {
