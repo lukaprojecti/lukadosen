@@ -273,8 +273,21 @@ export default function About() {
           >
             <h2 style={{ maxWidth: 480 }}>I share all of this in my newsletter</h2>
 
-            <p style={{ marginTop: 12, fontSize: 18, fontWeight: 300 }}>
-              <em>↓</em>
+            <p style={{ marginTop: 12, display: "flex", justifyContent: "center" }}>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--foreground)"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 5v14" />
+                <path d="M19 12l-7 7-7-7" />
+              </svg>
             </p>
 
             <div style={{ marginTop: 28, display: "flex", justifyContent: "center", width: "100%" }}>

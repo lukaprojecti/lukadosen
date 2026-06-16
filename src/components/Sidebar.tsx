@@ -199,7 +199,7 @@ function SidebarContent({ onNavigate, lettersCount }: { onNavigate?: () => void;
       </p>
 
       {/* Navigation */}
-      <nav style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <nav style={{ display: "flex", flexDirection: "column", gap: 6 }}>
         {navLinks.map((link) => {
           const isActive = pathname === link.href;
           const count = link.countKey === "letters" && lettersCount ? lettersCount : null;
@@ -214,7 +214,7 @@ function SidebarContent({ onNavigate, lettersCount }: { onNavigate?: () => void;
                 gap: 10,
                 fontSize: 14,
                 fontWeight: 300,
-                padding: "9px 12px",
+                padding: "6px 12px",
                 borderRadius: "var(--radius)",
                 color: isActive ? "var(--foreground)" : "var(--muted)",
                 backgroundColor: isActive ? "var(--background)" : "transparent",
@@ -268,7 +268,7 @@ function SidebarContent({ onNavigate, lettersCount }: { onNavigate?: () => void;
         >
           Find me
         </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
           {socialLinks.map((link) => (
             <a
               key={link.href}
@@ -281,7 +281,7 @@ function SidebarContent({ onNavigate, lettersCount }: { onNavigate?: () => void;
                 gap: 10,
                 fontSize: 14,
                 fontWeight: 300,
-                padding: "9px 12px",
+                padding: "6px 12px",
                 borderRadius: "var(--radius)",
                 color: "var(--muted)",
                 textDecoration: "none",

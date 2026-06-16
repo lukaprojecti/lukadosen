@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import localFont from "next/font/local";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
@@ -61,9 +62,28 @@ export default async function RootLayout({
     // Payload not yet ready (e.g. first boot / build time) — show no count
   }
 
+  const GA_ID = "G-E1M4KN3KLQ";
+
   return (
     <html lang="en">
       <body className={`${nohemi.variable} antialiased`}>
+        {/* Google Analytics (gtag.js) — production only, so local/preview
+            traffic doesn't pollute the data. */}
+        {process.env.NODE_ENV === "production" && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="gtag-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}');`}
+            </Script>
+          </>
+        )}
+
         <Sidebar lettersCount={lettersCount} />
         <div className="content-panel">
           <div className="content-panel-spacer" />
