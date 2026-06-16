@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import LettersClient, { type Letter } from './LettersClient'
+import { toThumbnail } from '@/lib/thumbnail'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,6 +15,7 @@ export default async function LettersPage() {
     },
     sort: '-publishedAt',
     limit: 100,
+    depth: 1, // populate the thumbnail media relation
   })
 
   // Map Payload docs to the shape LettersClient expects
@@ -24,6 +26,7 @@ export default async function LettersPage() {
     category: doc.category as Letter['category'],
     excerpt: doc.excerpt ?? undefined,
     publishedAt: doc.publishedAt ?? undefined,
+    thumbnail: toThumbnail(doc.thumbnail),
   }))
 
   return <LettersClient letters={letters} />

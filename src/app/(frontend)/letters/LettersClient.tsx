@@ -15,6 +15,7 @@ export type Letter = {
   category?: "development" | "architecture" | "construction" | "my-agency";
   excerpt?: string;
   publishedAt?: string;
+  thumbnail?: { url: string; alt: string };
 };
 
 /* ── Shared UI pieces ── */
@@ -136,8 +137,8 @@ function LetterRow({ letter }: { letter: Letter }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Thumbnail — fixed 4:3 (matches the homepage cards); placeholder until
-          per-letter images exist */}
+      {/* Thumbnail — fixed 4:3 (matches the homepage cards); gray placeholder
+          shows until a per-letter image is uploaded */}
       <div
         style={{
           flexShrink: 0,
@@ -148,7 +149,17 @@ function LetterRow({ letter }: { letter: Letter }) {
           backgroundColor: "#d9d9d0",
           overflow: "hidden",
         }}
-      />
+      >
+        {letter.thumbnail && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={letter.thumbnail.url}
+            alt={letter.thumbnail.alt}
+            loading="lazy"
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
+        )}
+      </div>
 
       {/* Content — title, description, then date pinned to the bottom */}
       <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>

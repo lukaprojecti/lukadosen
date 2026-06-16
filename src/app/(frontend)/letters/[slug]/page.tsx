@@ -3,6 +3,7 @@ import configPromise from '@payload-config'
 import { notFound } from 'next/navigation'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Link from 'next/link'
+import { toThumbnail } from '@/lib/thumbnail'
 
 export const dynamic = 'force-dynamic'
 
@@ -38,11 +39,13 @@ export default async function LetterPage({
       _status: { equals: 'published' },
     },
     limit: 1,
+    depth: 1, // populate the thumbnail media relation
   })
 
   if (!docs[0]) notFound()
 
   const letter = docs[0]
+  const thumbnail = toThumbnail(letter.thumbnail)
 
   return (
     <main>
@@ -106,6 +109,26 @@ export default async function LetterPage({
           >
             {letter.excerpt}
           </p>
+        )}
+
+        {/* Cover image */}
+        {thumbnail && (
+          <div
+            style={{
+              marginTop: 32,
+              borderRadius: 'var(--radius)',
+              overflow: 'hidden',
+              aspectRatio: '16 / 9',
+              backgroundColor: '#d9d9d0',
+            }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={thumbnail.url}
+              alt={thumbnail.alt}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          </div>
         )}
       </section>
 

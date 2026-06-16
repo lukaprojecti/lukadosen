@@ -172,12 +172,14 @@ function NewsletterCard({
   category,
   publishedAt,
   slug,
+  thumbnail,
   delay = 0,
 }: {
   title: string;
   category?: Letter["category"];
   publishedAt?: string;
   slug: string;
+  thumbnail?: { url: string; alt: string };
   delay?: number;
 }) {
   const meta = [category ? CATEGORY_LABELS[category] : null, publishedAt ? formatDate(publishedAt) : null]
@@ -220,7 +222,17 @@ function NewsletterCard({
             backgroundColor: "#d9d9d0",
             transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
           }}
-        />
+        >
+          {thumbnail && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={thumbnail.url}
+              alt={thumbnail.alt}
+              loading="lazy"
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
+          )}
+        </div>
       </div>
 
       {/* Copy */}
@@ -487,6 +499,7 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
                   category={letter.category}
                   publishedAt={letter.publishedAt}
                   slug={letter.slug}
+                  thumbnail={letter.thumbnail}
                   delay={i * 0.06}
                 />
               ))}
