@@ -7,6 +7,7 @@ export const metadata: Metadata = buildMetadata({
   title: "Legal Notice | Luka Došen",
   description: "Imprint and legal information for the website of Luka Došen.",
   absoluteTitle: true,
+  noIndex: true,
 });
 
 export default function LegalLayout({ children }: { children: React.ReactNode }) {
