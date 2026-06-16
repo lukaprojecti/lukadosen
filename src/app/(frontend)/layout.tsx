@@ -4,6 +4,7 @@ import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
+import { SITE_NAME, SITE_URL, OG_IMAGE, HOME_TITLE, HOME_DESCRIPTION } from "@/lib/seo";
 
 const nohemi = localFont({
   src: [
@@ -15,12 +16,30 @@ const nohemi = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Luka Došen | Planning & Building: Projects & Systems",
+    default: HOME_TITLE,
     template: "%s | LUKA",
   },
-  description:
-    "I show aspiring developers and professionals how residential projects actually get planned and built. Decision frameworks, execution systems, and insider lessons.",
+  description: HOME_DESCRIPTION,
+  icons: {
+    icon: [{ url: "/2026-lukadosen-favicon.jpg", type: "image/jpeg", sizes: "64x64" }],
+    apple: [{ url: "/2026-lukadosen-favicon.jpg" }],
+  },
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    url: SITE_URL,
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    images: [OG_IMAGE],
+  },
 };
 
 export default async function RootLayout({

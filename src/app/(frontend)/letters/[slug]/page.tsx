@@ -1,3 +1,5 @@
+import { cache } from 'react'
+import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { notFound } from 'next/navigation'
@@ -5,8 +7,46 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { toThumbnail } from '@/lib/thumbnail'
+import { buildMetadata, HOME_DESCRIPTION } from '@/lib/seo'
 
 export const dynamic = 'force-dynamic'
+
+// Cached so generateMetadata and the page share a single DB query per request.
+const getLetter = cache(async (slug: string) => {
+  const payload = await getPayload({ config: configPromise })
+  const { docs } = await payload.find({
+    collection: 'letters',
+    where: {
+      slug: { equals: slug },
+      _status: { equals: 'published' },
+    },
+    limit: 1,
+    depth: 1, // populate the thumbnail media relation
+  })
+  return docs[0] ?? null
+})
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const letter = await getLetter(slug)
+  if (!letter) {
+    return buildMetadata({
+      title: 'Letter not found',
+      description: HOME_DESCRIPTION,
+      absoluteTitle: true,
+      noIndex: true,
+    })
+  }
+  return buildMetadata({
+    title: letter.title,
+    description: letter.excerpt ?? HOME_DESCRIPTION,
+    absoluteTitle: true,
+  })
+}
 
 const CATEGORY_LABELS: Record<string, string> = {
   development: 'Development',
@@ -31,21 +71,10 @@ export default async function LetterPage({
 }) {
   const { slug } = await params
 
-  const payload = await getPayload({ config: configPromise })
+  const letter = await getLetter(slug)
 
-  const { docs } = await payload.find({
-    collection: 'letters',
-    where: {
-      slug: { equals: slug },
-      _status: { equals: 'published' },
-    },
-    limit: 1,
-    depth: 1, // populate the thumbnail media relation
-  })
+  if (!letter) notFound()
 
-  if (!docs[0]) notFound()
-
-  const letter = docs[0]
   const thumbnail = toThumbnail(letter.thumbnail)
 
   return (
