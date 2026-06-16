@@ -117,7 +117,7 @@ function formatDate(dateStr?: string) {
 
 /* ── Letter list item ── */
 
-function LetterRow({ letter }: { letter: Letter }) {
+function LetterRow({ letter, priority = false }: { letter: Letter; priority?: boolean }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -141,6 +141,7 @@ function LetterRow({ letter }: { letter: Letter }) {
           shows until a per-letter image is uploaded */}
       <div
         style={{
+          position: "relative",
           flexShrink: 0,
           alignSelf: "flex-start",
           width: "clamp(120px, 22vw, 190px)",
@@ -151,12 +152,13 @@ function LetterRow({ letter }: { letter: Letter }) {
         }}
       >
         {letter.thumbnail && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={letter.thumbnail.url}
             alt={letter.thumbnail.alt}
-            loading="lazy"
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            fill
+            sizes="190px"
+            priority={priority}
+            style={{ objectFit: "cover" }}
           />
         )}
       </div>
@@ -322,7 +324,7 @@ export default function LettersClient({ letters }: { letters: Letter[] }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: i * 0.05, ease: easing.smooth }}
                 >
-                  <LetterRow letter={letter} />
+                  <LetterRow letter={letter} priority={i === 0} />
                   {i < filtered.length - 1 && (
                     <div
                       style={{

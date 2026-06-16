@@ -3,6 +3,7 @@ import configPromise from '@payload-config'
 import { notFound } from 'next/navigation'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { toThumbnail } from '@/lib/thumbnail'
 
 export const dynamic = 'force-dynamic'
@@ -115,6 +116,7 @@ export default async function LetterPage({
         {thumbnail && (
           <div
             style={{
+              position: 'relative',
               marginTop: 32,
               borderRadius: 'var(--radius)',
               overflow: 'hidden',
@@ -122,11 +124,13 @@ export default async function LetterPage({
               backgroundColor: '#d9d9d0',
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={thumbnail.url}
               alt={thumbnail.alt}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              fill
+              sizes="(max-width: 720px) 100vw, 640px"
+              priority
+              style={{ objectFit: 'cover' }}
             />
           </div>
         )}

@@ -217,6 +217,7 @@ function NewsletterCard({
         <div
           className="card-thumbnail"
           style={{
+            position: "relative",
             width: "100%",
             height: "100%",
             backgroundColor: "#d9d9d0",
@@ -224,12 +225,12 @@ function NewsletterCard({
           }}
         >
           {thumbnail && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={thumbnail.url}
               alt={thumbnail.alt}
-              loading="lazy"
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              fill
+              sizes="(max-width: 700px) 50vw, 260px"
+              style={{ objectFit: "cover" }}
             />
           )}
         </div>
