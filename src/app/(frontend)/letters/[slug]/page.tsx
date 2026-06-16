@@ -83,11 +83,10 @@ export default async function LetterPage({
           Header
          ════════════════════════════════════════════ */}
       <section
+        className="letters-pad-x"
         style={{
           paddingTop: 80,
           paddingBottom: 48,
-          paddingLeft: 40,
-          paddingRight: 40,
           maxWidth: 720,
         }}
       >
@@ -167,11 +166,10 @@ export default async function LetterPage({
 
       {/* Divider */}
       <div
+        className="letters-divider-x"
         style={{
           height: 1,
           backgroundColor: 'var(--border)',
-          marginLeft: 40,
-          marginRight: 40,
           marginBottom: 48,
         }}
       />
@@ -180,9 +178,8 @@ export default async function LetterPage({
           Content
          ════════════════════════════════════════════ */}
       <section
+        className="letters-pad-x"
         style={{
-          paddingLeft: 40,
-          paddingRight: 40,
           paddingBottom: 80,
           maxWidth: 680,
         }}
@@ -199,7 +196,7 @@ export default async function LetterPage({
       {/* ════════════════════════════════════════════
           Back link
          ════════════════════════════════════════════ */}
-      <section style={{ paddingLeft: 40, paddingRight: 40, paddingBottom: 40 }}>
+      <section className="letters-pad-x" style={{ paddingBottom: 40 }}>
         <Link
           href="/letters"
           style={{
@@ -223,7 +220,7 @@ export default async function LetterPage({
       {/* ════════════════════════════════════════════
           Subscribe CTA
          ════════════════════════════════════════════ */}
-      <section style={{ paddingLeft: 40, paddingRight: 40, paddingBottom: 80 }}>
+      <section className="letters-pad-x" style={{ paddingBottom: 80 }}>
         <div
           style={{
             width: '100%',
