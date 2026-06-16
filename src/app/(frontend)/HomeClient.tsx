@@ -388,7 +388,12 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
                 src="/2026-portrait-luka.jpg"
                 alt="Luka Došen, real estate planner and founder of Projecti"
                 fill
-                sizes="(max-width: 1024px) 50vw, 320px"
+                /* The box is narrow but tall and the source is landscape, so
+                   object-fit: cover scales by height. next/image picks a variant
+                   by width, so we over-state the width to pull a high-res
+                   variant and avoid upscaling blur. */
+                sizes="(max-width: 1024px) 60vw, 900px"
+                quality={85}
                 style={{ objectFit: "cover", objectPosition: "center" }}
               />
             </div>
