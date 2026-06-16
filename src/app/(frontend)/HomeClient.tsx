@@ -546,9 +546,9 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
           >
             <Image
               src="/testimonial-carlo-gambon.jpg"
-              alt="Carlo Gambon, private owner"
-              width={96}
-              height={96}
+              alt="Carlo Gambon, Private Owner"
+              width={192}
+              height={192}
               style={{
                 borderRadius: "var(--radius)",
                 objectFit: "cover",
@@ -558,8 +558,7 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
             />
 
             <p style={{ marginTop: 16, fontSize: 16, fontWeight: 300, color: "var(--foreground)" }}>
-              Carlo Gambon
-              <span style={{ color: "var(--muted)", fontSize: 13, marginLeft: 8 }}>Private Owner</span>
+              Carlo Gambon, Private Owner
             </p>
 
             <p
