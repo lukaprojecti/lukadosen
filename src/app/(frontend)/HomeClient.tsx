@@ -362,37 +362,20 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
             documenting the path from planner to developer, sharing everything I learn along the way.
           </p>
 
-          {/* 4. Two columns: portrait left, benefits right — equal height */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 24,
-              marginTop: 32,
-              alignItems: "stretch",
-            }}
-          >
-            {/* Left: portrait — matches the benefit column height; sides crop */}
-            <div
-              style={{
-                position: "relative",
-                overflow: "hidden",
-                backgroundColor: "#d9d9d0",
-                borderRadius: "var(--radius)",
-                width: "100%",
-                height: "100%",
-                minHeight: 320,
-              }}
-            >
+          {/* 4. Two columns on desktop (portrait left, benefits right, equal
+              height); on mobile it stacks: square portrait under the text, then
+              the benefits below. */}
+          <div className="about-grid" style={{ marginTop: 32 }}>
+            {/* Portrait — desktop: matches benefit column height; mobile: square */}
+            <div className="about-portrait">
               <Image
                 src="/2026-portrait-luka.jpg"
                 alt="Luka Došen, real estate planner and founder of Projecti"
                 fill
-                /* The box is narrow but tall and the source is landscape, so
-                   object-fit: cover scales by height. next/image picks a variant
-                   by width, so we over-state the width to pull a high-res
-                   variant and avoid upscaling blur. */
-                sizes="(max-width: 1024px) 60vw, 900px"
+                /* Desktop box is narrow but tall (landscape source, cover scales
+                   by height); mobile box is a full-width square. Over-state the
+                   width so a high-res variant is pulled and stays sharp. */
+                sizes="(max-width: 767px) 92vw, (max-width: 1024px) 60vw, 900px"
                 quality={85}
                 style={{ objectFit: "cover", objectPosition: "center" }}
               />

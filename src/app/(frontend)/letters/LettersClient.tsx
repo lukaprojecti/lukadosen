@@ -226,11 +226,10 @@ export default function LettersClient({ letters }: { letters: Letter[] }) {
          ════════════════════════════════════════════ */}
       <Reveal>
         <section
+          className="letters-pad-x"
           style={{
             paddingTop: 80,
             paddingBottom: 40,
-            paddingLeft: 40,
-            paddingRight: 40,
           }}
         >
           <Badge>Letters</Badge>
@@ -287,9 +286,8 @@ export default function LettersClient({ letters }: { letters: Letter[] }) {
           SECTION 2 — Letter list with animation
          ════════════════════════════════════════════ */}
       <section
+        className="letters-list-pad-x"
         style={{
-          paddingLeft: 16,
-          paddingRight: 16,
           paddingBottom: 80,
         }}
       >
@@ -347,9 +345,8 @@ export default function LettersClient({ letters }: { letters: Letter[] }) {
          ════════════════════════════════════════════ */}
       <Reveal>
         <section
+          className="letters-pad-x"
           style={{
-            paddingLeft: 40,
-            paddingRight: 40,
             paddingBottom: 80,
           }}
         >
