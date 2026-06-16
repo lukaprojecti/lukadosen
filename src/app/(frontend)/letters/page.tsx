@@ -1,9 +1,18 @@
+import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import LettersClient, { type Letter } from './LettersClient'
 import { toThumbnail } from '@/lib/thumbnail'
+import { buildMetadata } from '@/lib/seo'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = buildMetadata({
+  title: 'Letters | Honest Notes on Planning & Building Projects',
+  description:
+    "The full archive of Luka's letters — short, practical notes on how real estate projects get planned and built, the systems behind them, and the journey to ownership.",
+  absoluteTitle: true,
+})
 
 export default async function LettersPage() {
   const payload = await getPayload({ config: configPromise })
