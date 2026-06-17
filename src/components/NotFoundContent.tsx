@@ -8,74 +8,58 @@ export default function NotFoundContent() {
         minHeight: "70vh",
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-start",
+        alignItems: "center",
         justifyContent: "center",
-        padding: 40,
+        textAlign: "center",
+        padding: "40px 20px",
       }}
     >
+      {/* "Page not found" pill — matches the category pill styling used elsewhere */}
       <span
         style={{
-          fontSize: "clamp(64px, 12vw, 120px)",
+          fontSize: 13,
           fontWeight: 300,
-          letterSpacing: "-0.03em",
-          lineHeight: 1,
+          padding: "4px 12px",
+          borderRadius: "var(--radius)",
+          backgroundColor: "var(--border)",
           color: "var(--foreground)",
         }}
       >
-        404
+        Page not found
       </span>
 
       <h1
         style={{
-          marginTop: 16,
-          fontSize: "clamp(24px, 4vw, 36px)",
+          marginTop: 24,
+          fontSize: "clamp(40px, 8vw, 76px)",
           fontWeight: 300,
-          letterSpacing: "-0.02em",
+          letterSpacing: "-0.03em",
+          lineHeight: 1.05,
+          maxWidth: 760,
         }}
       >
-        Page not found
+        Not all journeys
+        <br />
+        go as planned.
       </h1>
-
-      <p
-        style={{
-          marginTop: 12,
-          fontSize: 16,
-          fontWeight: 300,
-          lineHeight: 1.5,
-          color: "var(--muted)",
-          maxWidth: 460,
-        }}
-      >
-        Not all journeys go as planned. This page could not be found.
-      </p>
 
       <Link
         href="/"
         style={{
-          marginTop: 28,
+          marginTop: 32,
           display: "inline-flex",
           alignItems: "center",
           gap: 8,
-          fontSize: 14,
+          fontSize: 15,
           fontWeight: 300,
-          color: "var(--foreground)",
+          padding: "12px 24px",
+          borderRadius: "var(--radius)",
+          background: "var(--foreground)",
+          color: "var(--accent)",
           textDecoration: "none",
         }}
       >
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M19 12H5" />
-          <path d="M12 19l-7-7 7-7" />
-        </svg>
-        Back home
+        Go home
       </Link>
     </main>
   );

@@ -23,6 +23,7 @@ export function buildMetadata(opts: {
 }): Metadata {
   const { title, description, absoluteTitle, noIndex } = opts
   return {
+    metadataBase: new URL(SITE_URL),
     title: absoluteTitle ? { absolute: title } : title,
     description,
     ...(noIndex ? { robots: { index: false, follow: false } } : {}),

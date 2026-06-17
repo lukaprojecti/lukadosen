@@ -117,7 +117,7 @@ function formatDate(dateStr?: string) {
 
 /* ── Letter list item ── */
 
-function LetterRow({ letter, priority = false }: { letter: Letter; priority?: boolean }) {
+function LetterRow({ letter }: { letter: Letter }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -157,7 +157,6 @@ function LetterRow({ letter, priority = false }: { letter: Letter; priority?: bo
             alt={letter.thumbnail.alt}
             fill
             sizes="190px"
-            priority={priority}
             style={{ objectFit: "cover" }}
           />
         )}
@@ -322,7 +321,7 @@ export default function LettersClient({ letters }: { letters: Letter[] }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: i * 0.05, ease: easing.smooth }}
                 >
-                  <LetterRow letter={letter} priority={i === 0} />
+                  <LetterRow letter={letter} />
                   {i < filtered.length - 1 && (
                     <div
                       style={{
