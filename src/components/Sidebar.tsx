@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -329,6 +329,28 @@ function SidebarContent({ onNavigate, lettersCount }: { onNavigate?: () => void;
 export default function Sidebar({ lettersCount }: { lettersCount?: number }) {
   const pathname = usePathname();
 
+  // Mobile bottom bar: show a right-edge fade only while the nav actually
+  // overflows and isn't scrolled to the end — hints at the horizontal scroll
+  // without dimming the last item on phones wide enough to fit everything.
+  const mobileBarRef = useRef<HTMLElement>(null);
+  const [showScrollFade, setShowScrollFade] = useState(false);
+
+  useEffect(() => {
+    const bar = mobileBarRef.current;
+    if (!bar) return;
+    const update = () => {
+      const remaining = bar.scrollWidth - bar.clientWidth - bar.scrollLeft;
+      setShowScrollFade(remaining > 4);
+    };
+    update();
+    bar.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      bar.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
   return (
     <>
       {/* ── Desktop sidebar (1024px+) ── */}
@@ -430,7 +452,10 @@ export default function Sidebar({ lettersCount }: { lettersCount?: number }) {
       </aside>
 
       {/* ── Mobile bottom tab bar (<768px) ── */}
-      <nav className="mobile-bottom-bar">
+      <nav
+        ref={mobileBarRef}
+        className={`mobile-bottom-bar${showScrollFade ? " scroll-fade" : ""}`}
+      >
         {[...navLinks, ...socialLinks].map((link) => {
           const isActive = pathname === link.href;
           const isExternal = link.href.startsWith("http") || link.href.startsWith("mailto:");
@@ -446,8 +471,8 @@ export default function Sidebar({ lettersCount }: { lettersCount?: number }) {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                minWidth: 52,
-                padding: "8px 6px",
+                minWidth: 64,
+                padding: "8px 12px",
                 gap: 4,
                 textDecoration: "none",
                 color: isActive ? "var(--foreground)" : "var(--muted)",

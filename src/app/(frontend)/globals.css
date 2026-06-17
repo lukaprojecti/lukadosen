@@ -166,6 +166,21 @@ small,
 .mobile-bottom-bar::-webkit-scrollbar {
   display: none;
 }
+/* Right-edge fade to hint that the nav scrolls horizontally on narrow phones.
+   Only rendered when JS detects real overflow (.scroll-fade). Pinned to the
+   viewport (position: fixed) so it stays put while the items scroll underneath
+   it; non-interactive so taps pass through. */
+.mobile-bottom-bar.scroll-fade::after {
+  content: "";
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 52px;
+  height: calc(72px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(to right, rgba(232, 231, 227, 0), var(--base) 75%);
+  pointer-events: none;
+  z-index: 51;
+}
 
 /* ── Layout: Content panel ── */
 
