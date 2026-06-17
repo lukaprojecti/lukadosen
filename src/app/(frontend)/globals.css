@@ -411,6 +411,20 @@ small,
   margin: 2em 0;
 }
 
+/* ── Lenis smooth scroll ── */
+/* Lenis adds these classes to the scroll wrapper (.content-panel). Disable the
+   native smooth behavior while Lenis drives the easing, and lock scroll when
+   Lenis is stopped. */
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
 /* ── Scrollbar styling ── */
 
 .content-panel::-webkit-scrollbar {

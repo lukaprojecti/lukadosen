@@ -3,6 +3,7 @@ import Script from "next/script";
 import localFont from "next/font/local";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
+import SmoothScroll from "@/components/SmoothScroll";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { SITE_NAME, SITE_URL, OG_IMAGE, HOME_TITLE, HOME_DESCRIPTION } from "@/lib/seo";
@@ -84,6 +85,7 @@ export default async function RootLayout({
           </>
         )}
 
+        <SmoothScroll />
         <Sidebar lettersCount={lettersCount} />
         <div className="content-panel">
           <div className="content-panel-spacer" />
