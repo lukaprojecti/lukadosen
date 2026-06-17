@@ -6,6 +6,7 @@ import { Reveal } from "@/components/Reveal";
 import { fadeUp } from "@/lib/motion";
 import { useSubscribe } from "@/lib/useSubscribe";
 import Image from "next/image";
+import Link from "next/link";
 import { type Letter } from "./letters/LettersClient";
 
 /* ── Shared UI pieces ── */
@@ -427,7 +428,7 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
 
           {/* 5. CTA button */}
           <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
-            <a
+            <Link
               href="/about"
               className="btn-hover"
               style={{
@@ -443,7 +444,7 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
               }}
             >
               More About Me
-            </a>
+            </Link>
           </div>
         </section>
       </Reveal>

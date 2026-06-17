@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Reveal } from "@/components/Reveal";
-import { fadeUp, easing } from "@/lib/motion";
+import { easing } from "@/lib/motion";
 import Image from "next/image";
 
 /* ── Types ── */
