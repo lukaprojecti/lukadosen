@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { notifyNewSubscriber } from '../lib/notifyDiscord'
 
 export const Subscribers: CollectionConfig = {
   slug: 'subscribers',
@@ -6,6 +7,18 @@ export const Subscribers: CollectionConfig = {
     useAsTitle: 'email',
     defaultColumns: ['email', 'source', 'createdAt'],
     group: 'Newsletter',
+  },
+  hooks: {
+    // Ping Discord when a brand-new subscriber is stored. Only on `create`,
+    // so the idempotent duplicate path (which never creates a row) stays
+    // quiet. Awaited but fault-tolerant — see notifyNewSubscriber.
+    afterChange: [
+      ({ doc, operation }) => {
+        if (operation === 'create') {
+          return notifyNewSubscriber(doc.email, doc.source ?? undefined)
+        }
+      },
+    ],
   },
   access: {
     // The public /api/subscribe route writes through the Local API

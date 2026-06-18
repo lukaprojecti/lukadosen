@@ -9,7 +9,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 /**
  * Shared newsletter-subscribe logic for every email form on the site
  * (homepage hero, homepage CTA, sidebar "Get Inside"). Posts to the
- * same-origin /api/subscribe route, which forwards to the Google Sheet.
+ * same-origin /api/subscribe route, which stores the address in the Payload
+ * "subscribers" collection (our own Postgres).
  */
 export function useSubscribe(source?: string) {
   const [status, setStatus] = useState<SubscribeStatus>("idle");
