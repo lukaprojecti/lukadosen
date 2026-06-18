@@ -196,7 +196,7 @@ small,
   overflow-x: hidden;
   position: relative;
   z-index: 30;
-  transition: margin-left 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: margin-left 340ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Mobile: spacer for bottom bar */
@@ -226,6 +226,13 @@ small,
 @media (min-width: 1024px) {
   .sidebar-desktop {
     display: flex;
+    /* Expand sequence: the content panel slides the gap fully open first (its
+       340ms margin-left transition above); only then does the sidebar content
+       fade/slide in. The animation delay (360ms) is held just past the panel's
+       slide so the content — including the wide subscribe box — is never
+       visible over the panel mid-animation. Fires whenever the desktop layout
+       activates: resizing past 1024px or the first paint at desktop. */
+    animation: sidebar-expand-in 300ms cubic-bezier(0.22, 1, 0.36, 1) 360ms both;
   }
 
   .sidebar-tablet {
@@ -234,6 +241,17 @@ small,
 
   .content-panel {
     margin-left: var(--sidebar-width);
+  }
+}
+
+@keyframes sidebar-expand-in {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -466,6 +484,7 @@ small,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;

@@ -120,39 +120,6 @@ function SubscribeForm({ source }: { source: string }) {
   );
 }
 
-function NewsletterTab({ label, active }: { label: string; active: boolean }) {
-  return (
-    <button
-      style={{
-        fontSize: 14,
-        fontWeight: 300,
-        padding: "6px 14px",
-        border: "none",
-        borderRadius: "var(--radius)",
-        background: active ? "var(--surface)" : "transparent",
-        color: active ? "var(--foreground)" : "var(--muted)",
-        cursor: "pointer",
-        fontFamily: "inherit",
-        transition: "background 0.2s, color 0.2s",
-      }}
-      onMouseEnter={(e) => {
-        if (!active) {
-          e.currentTarget.style.background = "var(--surface)";
-          e.currentTarget.style.color = "var(--foreground)";
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!active) {
-          e.currentTarget.style.background = "transparent";
-          e.currentTarget.style.color = "var(--muted)";
-        }
-      }}
-    >
-      {label}
-    </button>
-  );
-}
-
 const CATEGORY_LABELS: Record<string, string> = {
   development: "Development",
   architecture: "Architecture",
@@ -183,9 +150,8 @@ function NewsletterCard({
   thumbnail?: { url: string; alt: string };
   delay?: number;
 }) {
-  const meta = [category ? CATEGORY_LABELS[category] : null, publishedAt ? formatDate(publishedAt) : null]
-    .filter(Boolean)
-    .join(" · ");
+  const categoryLabel = category ? CATEGORY_LABELS[category] : null;
+  const dateLabel = publishedAt ? formatDate(publishedAt) : null;
 
   return (
     <motion.a
@@ -250,16 +216,22 @@ function NewsletterCard({
         >
           {title}
         </p>
-        <p
-          style={{
-            marginTop: 8,
-            fontSize: 13,
-            color: "var(--muted)",
-            letterSpacing: "0.01em",
-          }}
-        >
-          {meta}
-        </p>
+        {/* Category and date on separate rows — a single line wraps awkwardly
+            in the narrow card column on some labels/dates */}
+        {(categoryLabel || dateLabel) && (
+          <div style={{ marginTop: 8 }}>
+            {categoryLabel && (
+              <p style={{ fontSize: 13, color: "var(--muted)", letterSpacing: "0.01em" }}>
+                {categoryLabel}
+              </p>
+            )}
+            {dateLabel && (
+              <p style={{ marginTop: 2, fontSize: 13, color: "var(--muted)", letterSpacing: "0.01em" }}>
+                {dateLabel}
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </motion.a>
   );
@@ -458,21 +430,8 @@ export default function HomeClient({ letters }: { letters: Letter[] }) {
         <section>
           <Badge>Inside newsletter</Badge>
 
-          {/* Filter tabs */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
-              marginTop: 20,
-            }}
-          >
-            {["All", "Development", "Architecture", "Construction", "My Agency"].map((tab, i) => (
-              <NewsletterTab key={tab} label={tab} active={i === 0} />
-            ))}
-          </div>
-
-          {/* 2-column card grid */}
+          {/* 2-column card grid (no category filter — the homepage only shows
+              the 4 latest letters, so filtering would be overkill) */}
           {letters.length > 0 ? (
             <div
               style={{
