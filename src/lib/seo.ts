@@ -12,7 +12,7 @@ export const OG_IMAGE = isLanding
 export const OG_LOCALE = isLanding ? 'de_CH' : 'en_US'
 
 export const HOME_TITLE = isLanding
-  ? 'Luka Došen | Planung von Wohnbauprojekten'
+  ? 'Luka Došen | Projektentwicklung und Planung'
   : 'Luka Došen | Planning & Building: Projects & Systems'
 export const HOME_DESCRIPTION = isLanding
   ? 'Mit Projecti begleite ich Immobilienentwickler, Investoren und private Bauherren vom ersten Entwicklungskonzept bis zur baureifen Planung.'

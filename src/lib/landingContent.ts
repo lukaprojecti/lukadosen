@@ -12,7 +12,7 @@ export type LandingLink = {
 export const landingContent = {
   portrait: {
     src: "/2026-portrait-luka-mint.jpg",
-    alt: "Luka Došen, Planung von Wohnbauprojekten",
+    alt: "Luka Došen, Projektentwicklung und Planung",
   },
   eyebrow: "Hoi, Luka hier",
   title: {
