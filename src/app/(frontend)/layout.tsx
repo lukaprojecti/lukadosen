@@ -8,7 +8,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { SITE_MODE, isLanding } from "@/lib/siteMode";
-import { SITE_NAME, SITE_URL, OG_IMAGE, HOME_TITLE, HOME_DESCRIPTION } from "@/lib/seo";
+import { SITE_NAME, SITE_URL, OG_IMAGE, OG_LOCALE, HOME_TITLE, HOME_DESCRIPTION } from "@/lib/seo";
 
 const nohemi = localFont({
   src: [
@@ -32,6 +32,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
+    locale: OG_LOCALE,
     siteName: SITE_NAME,
     url: SITE_URL,
     title: HOME_TITLE,
