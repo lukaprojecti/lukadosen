@@ -5,7 +5,11 @@ export const SITE_NAME = 'Luka Došen'
 export const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
 // Shared social preview image for every page (1200x630, lives in /public).
-export const OG_IMAGE = '/2026-lukadosen-social-review.jpg'
+export const OG_IMAGE = isLanding
+  ? '/2026-lukadosen-social-landing.jpg'
+  : '/2026-lukadosen-social-review.jpg'
+
+export const OG_LOCALE = isLanding ? 'de_CH' : 'en_US'
 
 export const HOME_TITLE = isLanding
   ? 'Luka Došen | Planung von Wohnbauprojekten'
@@ -33,6 +37,7 @@ export function buildMetadata(opts: {
     ...(noIndex ? { robots: { index: false, follow: false } } : {}),
     openGraph: {
       type: 'website',
+      locale: OG_LOCALE,
       siteName: SITE_NAME,
       title,
       description,

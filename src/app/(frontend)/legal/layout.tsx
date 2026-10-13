@@ -6,8 +6,10 @@ import LandingShell from "@/components/landing/LandingShell";
 // The Legal page is a client component, so its metadata lives here in a
 // (no-op) route layout instead of a `metadata` export on the page.
 export const metadata: Metadata = buildMetadata({
-  title: "Legal Notice | Luka Došen",
-  description: "Imprint and legal information for the website of Luka Došen.",
+  title: isLanding ? "Impressum & Datenschutz | Luka Došen" : "Legal Notice | Luka Došen",
+  description: isLanding
+    ? "Impressum und Datenschutzerklärung der Website von Luka Došen."
+    : "Imprint and legal information for the website of Luka Došen.",
   absoluteTitle: true,
   noIndex: true,
 });
