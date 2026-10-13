@@ -99,16 +99,20 @@
 
 .buttons {
   margin-top: 40px;
-  display: flex;
-  flex-wrap: wrap;
+  width: 100%;
+  /* Three equal-width buttons that together fill the text column. */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 
 .button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 13px 24px 13px 20px;
+  padding: 13px 16px;
+  white-space: nowrap;
   border-radius: 999px;
   font-size: 14px;
   font-weight: 300;
@@ -181,18 +185,18 @@
   color: var(--mint);
 }
 
-@media (max-width: 519px) {
+/* Below the full column width the labels no longer fit in a third. */
+@media (max-width: 639px) {
   .buttons {
-    flex-direction: column;
-    width: 100%;
+    grid-template-columns: 1fr;
   }
 
   .button {
-    width: 100%;
-    justify-content: center;
     padding: 15px 24px;
   }
+}
 
+@media (max-width: 519px) {
   .footer {
     flex-direction: column;
   }
