@@ -30,6 +30,11 @@ export const landingContent = {
     { label: "Vernetze dich", href: "https://www.linkedin.com/in/lukadosen", icon: "linkedin", variant: "secondary" },
     { label: "Call buchen", href: "https://cal.com/luka-dosen/projecti", icon: "calendar", variant: "primary" },
   ] satisfies LandingLink[],
+  notFound: {
+    eyebrow: "Seite nicht gefunden",
+    title: { lead: "Nicht jedes Projekt läuft ", accent: "nach Plan." },
+    cta: "Zur Startseite",
+  },
   footer: {
     owner: "The Luka Dosen Labs",
     legal: { label: "Impressum & Datenschutz", href: "/legal" },

@@ -4,9 +4,18 @@ import { landingContent as c } from "@/lib/landingContent";
 import { Icon } from "./icons";
 import styles from "./LandingPage.module.css";
 
-export default function LandingPage() {
-  const year = new Date().getFullYear();
+export function LandingFooter() {
+  return (
+    <footer className={styles.footer}>
+      <span>
+        © {new Date().getFullYear()} {c.footer.owner}
+      </span>
+      <Link href={c.footer.legal.href}>{c.footer.legal.label}</Link>
+    </footer>
+  );
+}
 
+export default function LandingPage() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
@@ -51,12 +60,7 @@ export default function LandingPage() {
         </nav>
       </main>
 
-      <footer className={styles.footer}>
-        <span>
-          © {year} {c.footer.owner}
-        </span>
-        <Link href={c.footer.legal.href}>{c.footer.legal.label}</Link>
-      </footer>
+      <LandingFooter />
     </div>
   );
 }

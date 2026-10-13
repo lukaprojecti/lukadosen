@@ -51,3 +51,13 @@ export function buildMetadata(opts: {
     },
   }
 }
+
+// Shared by not-found.tsx and the [...not-found] catch-all.
+export const NOT_FOUND_METADATA: Metadata = buildMetadata({
+  title: isLanding ? 'Seite nicht gefunden | Luka Došen' : 'Page Not Found | Luka Došen',
+  description: isLanding
+    ? 'Nicht jedes Projekt läuft nach Plan. Diese Seite gibt es nicht.'
+    : 'Not all journeys go as planned. This page could not be found.',
+  absoluteTitle: true,
+  noIndex: true,
+})

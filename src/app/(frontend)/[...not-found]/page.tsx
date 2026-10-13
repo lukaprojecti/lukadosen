@@ -1,18 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { buildMetadata } from "@/lib/seo";
-import { isLanding } from "@/lib/siteMode";
+import { NOT_FOUND_METADATA } from "@/lib/seo";
 
 // Evaluated even though the component throws notFound(), so the 404 gets a
 // correct tab title instead of falling back to the site default.
-export const metadata: Metadata = buildMetadata({
-  title: isLanding ? "Seite nicht gefunden | Luka Došen" : "Page Not Found | Luka Došen",
-  description: isLanding
-    ? "Nicht jedes Projekt läuft nach Plan. Diese Seite gibt es nicht."
-    : "Not all journeys go as planned. This page could not be found.",
-  absoluteTitle: true,
-  noIndex: true,
-});
+export const metadata: Metadata = NOT_FOUND_METADATA;
 
 // Catch-all for any top-level URL that matches no other route. Triggering
 // notFound() here renders (frontend)/not-found.tsx within the frontend layout,

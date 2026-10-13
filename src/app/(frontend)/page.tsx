@@ -1,3 +1,4 @@
+import { connection } from "next/server";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import HomeClient from "./HomeClient";
@@ -6,10 +7,15 @@ import { toThumbnail } from "@/lib/thumbnail";
 import { isLanding } from "@/lib/siteMode";
 import LandingPage from "@/components/landing/LandingPage";
 
-export const dynamic = "force-dynamic";
+// Landing mode is prerendered and refreshed daily (footer year). Full mode
+// opts into per-request rendering via connection() below.
+export const revalidate = 86400;
 
 export default async function Home() {
   if (isLanding) return <LandingPage />;
+
+  // Full mode: render per request so new letters show up without a rebuild.
+  await connection();
 
   // 4 latest published letters for the homepage highlight grid.
   // Wrapped in try/catch so the homepage still renders if the DB is
