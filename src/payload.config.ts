@@ -30,6 +30,11 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
+    // Never auto-push the schema in dev. Local dev uses the production
+    // database, and Drizzle's push turns Row Level Security off on every
+    // table (Supabase then reports the tables as public). Schema changes
+    // go through `payload migrate:create` + `payload migrate` instead.
+    push: false,
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
