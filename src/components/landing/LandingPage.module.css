@@ -73,6 +73,7 @@
 .title em {
   font-style: normal;
   color: var(--mint);
+  white-space: nowrap; /* keep "coolen Leuten." on one line */
 }
 
 .intro {
