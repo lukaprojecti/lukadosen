@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import NotFoundContent from "@/components/NotFoundContent";
 import { buildMetadata } from "@/lib/seo";
+import { isLanding } from "@/lib/siteMode";
+import LandingShell from "@/components/landing/LandingShell";
 
 export const metadata: Metadata = buildMetadata({
   title: "Page Not Found | Luka Došen",
@@ -10,5 +12,12 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function NotFound() {
+  if (isLanding) {
+    return (
+      <LandingShell backLink={false}>
+        <NotFoundContent />
+      </LandingShell>
+    );
+  }
   return <NotFoundContent />;
 }

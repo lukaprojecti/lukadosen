@@ -1,0 +1,30 @@
+.shell {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px;
+  color: var(--fg);
+}
+
+/* The legal page's own footer links to full-site pages and uses a dark logo. */
+.shell footer {
+  display: none !important; /* overrides its inline display:flex */
+}
+
+.back {
+  display: inline-block;
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 200ms ease-out;
+}
+
+.back:hover,
+.back:focus-visible {
+  color: var(--mint);
+}
+
+@media (max-width: 767px) {
+  .shell {
+    padding: 32px 20px;
+  }
+}
