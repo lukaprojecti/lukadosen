@@ -28,7 +28,7 @@ export const landingContent = {
   links: [
     { label: "Projecti besuchen", href: "https://projecti.ch", icon: "house", variant: "secondary" },
     { label: "Vernetze dich", href: "https://www.linkedin.com/in/lukadosen", icon: "linkedin", variant: "secondary" },
-    { label: "Call buchen", href: "https://cal.com/lukadosen", icon: "calendar", variant: "primary" },
+    { label: "Call buchen", href: "https://cal.com/luka-dosen/projecti", icon: "calendar", variant: "primary" },
   ] satisfies LandingLink[],
   footer: {
     owner: "The Luka Dosen Labs",
