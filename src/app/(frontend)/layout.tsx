@@ -27,8 +27,8 @@ export const metadata: Metadata = {
   },
   description: HOME_DESCRIPTION,
   icons: {
-    icon: [{ url: "/2026-lukadosen-favicon.jpg", type: "image/jpeg", sizes: "64x64" }],
-    apple: [{ url: "/2026-lukadosen-favicon.jpg" }],
+    icon: [{ url: "/2026-lukadosen-favicon.png", type: "image/png", sizes: "32x32" }],
+    apple: [{ url: "/2026-lukadosen-favicon.png" }],
   },
   openGraph: {
     type: "website",
