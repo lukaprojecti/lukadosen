@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
+import { isLanding } from "@/lib/siteMode";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -15,6 +16,9 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * visible/exportable in the /admin panel — no third-party service or keys.
  */
 export async function POST(req: Request) {
+  // Landing mode has no subscribe form, so don't accept (bot) signups.
+  if (isLanding) return new NextResponse(null, { status: 404 });
+
   let email = "";
   let source = "";
   try {

@@ -1,15 +1,7 @@
 import Link from "next/link";
 
 /** Shared 404 UI used by both the in-app and the global (root) not-found pages. */
-export default function NotFoundContent({
-  label = "Page not found",
-  lines = ["Not all journeys", "go as planned."],
-  cta = "Go home",
-}: {
-  label?: string;
-  lines?: [string, string];
-  cta?: string;
-} = {}) {
+export default function NotFoundContent() {
   return (
     <main
       style={{
@@ -33,7 +25,7 @@ export default function NotFoundContent({
           color: "var(--foreground)",
         }}
       >
-        {label}
+        Page not found
       </span>
 
       <h1
@@ -46,9 +38,9 @@ export default function NotFoundContent({
           maxWidth: 760,
         }}
       >
-        {lines[0]}
+        Not all journeys
         <br />
-        {lines[1]}
+        go as planned.
       </h1>
 
       <Link
@@ -67,7 +59,7 @@ export default function NotFoundContent({
           textDecoration: "none",
         }}
       >
-        {cta}
+        Go home
       </Link>
     </main>
   );
