@@ -1,8 +1,20 @@
 .shell {
+  position: relative;
+  isolation: isolate; /* keeps ::before above the body background */
   max-width: 720px;
   margin: 0 auto;
   padding: 48px;
   color: var(--fg);
+}
+
+/* Same soft light from the bottom right corner as the landing page. */
+.shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--schimmer);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .back {
