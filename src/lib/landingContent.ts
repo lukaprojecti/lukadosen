@@ -23,7 +23,7 @@ export const landingContent = {
     before: "Mit ",
     link: { label: "Projecti", href: "https://projecti.ch" },
     after:
-      " begleite ich Wohnbauprojekte von der ersten Parzellenidee bis zur Umsetzung, für Grundeigentümer, Entwickler und institutionelle Bauherren. Aus Landquart, für die ganze Deutschschweiz.",
+      " begleite ich Immobilienentwickler, Investoren und private Bauherren vom ersten Entwicklungskonzept eines Grundstücks bis zur baureifen Planung. Dadurch erreichen sie eine höhere Performance in ihren Bauprojekten.",
   },
   links: [
     { label: "Projecti besuchen", href: "https://projecti.ch", icon: "house", variant: "secondary" },

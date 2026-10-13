@@ -15,7 +15,7 @@ export const HOME_TITLE = isLanding
   ? 'Luka Došen | Planung von Wohnbauprojekten'
   : 'Luka Došen | Planning & Building: Projects & Systems'
 export const HOME_DESCRIPTION = isLanding
-  ? 'Ich plane coole Projekte mit coolen Leuten. Mit Projecti begleite ich Wohnbauprojekte von der ersten Parzellenidee bis zur Umsetzung.'
+  ? 'Mit Projecti begleite ich Immobilienentwickler, Investoren und private Bauherren vom ersten Entwicklungskonzept bis zur baureifen Planung.'
   : 'I plan projects and build systems. Decision frameworks, execution lessons, and transparent insights from planning to ownership. Follow the journey.'
 
 /**
