@@ -2,12 +2,18 @@ import type { MetadataRoute } from "next";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
 import { SITE_URL } from "@/lib/seo";
+import { isLanding } from "@/lib/siteMode";
 
 // Regenerate per request so newly published letters appear without a rebuild.
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = SITE_URL.replace(/\/$/, "");
+
+  // Landing mode: the landing page is the only indexable page.
+  if (isLanding) {
+    return [{ url: `${base}/`, changeFrequency: "monthly", priority: 1 }];
+  }
 
   // Public, indexable pages. /legal is intentionally excluded (noindex).
   const staticRoutes: MetadataRoute.Sitemap = [

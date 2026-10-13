@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { isLanding } from './siteMode'
 
 export const SITE_NAME = 'Luka Došen'
 export const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
@@ -6,9 +7,12 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:
 // Shared social preview image for every page (1200x630, lives in /public).
 export const OG_IMAGE = '/2026-lukadosen-social-review.jpg'
 
-export const HOME_TITLE = 'Luka Došen | Planning & Building: Projects & Systems'
-export const HOME_DESCRIPTION =
-  'I plan projects and build systems. Decision frameworks, execution lessons, and transparent insights from planning to ownership. Follow the journey.'
+export const HOME_TITLE = isLanding
+  ? 'Luka Došen | Planung von Wohnbauprojekten'
+  : 'Luka Došen | Planning & Building: Projects & Systems'
+export const HOME_DESCRIPTION = isLanding
+  ? 'Ich plane coole Projekte mit coolen Leuten. Mit Projecti begleite ich Wohnbauprojekte von der ersten Parzellenidee bis zur Umsetzung.'
+  : 'I plan projects and build systems. Decision frameworks, execution lessons, and transparent insights from planning to ownership. Follow the journey.'
 
 /**
  * Build a page's Metadata with consistent Open Graph + Twitter tags and the

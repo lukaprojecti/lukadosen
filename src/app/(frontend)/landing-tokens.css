@@ -1,0 +1,32 @@
+/*
+ * Projecti design tokens (dark), active only in site mode `landing`.
+ * Imported globally but scoped to html[data-site-mode="landing"], so the
+ * full site is untouched. The legacy --foreground/--muted/--border/--accent
+ * vars are remapped too, so /legal and the 404 follow the dark palette.
+ */
+html[data-site-mode="landing"] {
+  --canvas: #0e1411;
+  --ink: #0f2318;
+  --mint: #73e2a7;
+  --mint-hover: #5fce95;
+  --fg: #f2f7f0;
+  --muted: #9fb2a6;
+  --border: #24322b;
+  --schimmer: radial-gradient(
+    circle at 78% 100%,
+    rgba(115, 226, 167, 0.2) 0%,
+    rgba(28, 124, 84, 0.09) 42%,
+    rgba(28, 124, 84, 0) 72%
+  );
+
+  --base: var(--canvas);
+  --background: var(--canvas);
+  --surface: var(--canvas);
+  --foreground: var(--fg);
+  --accent: var(--ink);
+}
+
+html[data-site-mode="landing"] ::selection {
+  background: var(--mint);
+  color: var(--ink);
+}

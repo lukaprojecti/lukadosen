@@ -3,10 +3,14 @@ import configPromise from "@payload-config";
 import HomeClient from "./HomeClient";
 import { type Letter } from "./letters/LettersClient";
 import { toThumbnail } from "@/lib/thumbnail";
+import { isLanding } from "@/lib/siteMode";
+import LandingPage from "@/components/landing/LandingPage";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
+  if (isLanding) return <LandingPage />;
+
   // 4 latest published letters for the homepage highlight grid.
   // Wrapped in try/catch so the homepage still renders if the DB is
   // unreachable (e.g. Supabase paused) instead of returning a 500.
