@@ -1,5 +1,8 @@
 "use client";
 
+import { isLanding } from "@/lib/siteMode";
+import LegalDe from "./LegalDe";
+
 /* ── Shared UI piece ── */
 
 function Badge({ children }: { children: React.ReactNode }) {
@@ -53,6 +56,9 @@ const listItemStyle: React.CSSProperties = {
 /* ── Page ── */
 
 export default function Legal() {
+  // Landing mode is German-only.
+  if (isLanding) return <LegalDe />;
+
   return (
     <main>
       {/* ════════════════════════════════════════════
