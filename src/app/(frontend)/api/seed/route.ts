@@ -40,17 +40,20 @@ async function runSeed() {
   return created
 }
 
-export async function GET() {
+// Destructive: wipes and re-creates every letter. POST-only, never in a
+// production build, and only with ALLOW_SEED=true, because local dev talks to
+// the same database as production. Next.js serves HEAD through GET, so a GET
+// handler here would let any crawler or link preview trigger it.
+export async function POST() {
+  if (process.env.NODE_ENV === 'production' || process.env.ALLOW_SEED !== 'true') {
+    return new NextResponse(null, { status: 404 })
+  }
+
   try {
     const created = await runSeed()
     return NextResponse.json({ ok: true, count: created.length, created })
   } catch (err) {
     console.error('[seed] failed', err)
-    const message = err instanceof Error ? err.message : String(err)
-    return NextResponse.json({ ok: false, error: message }, { status: 500 })
+    return NextResponse.json({ ok: false, error: 'Seed failed' }, { status: 500 })
   }
-}
-
-export async function POST() {
-  return GET()
 }
