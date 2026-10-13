@@ -5,7 +5,9 @@
  */
 export type SiteMode = 'landing' | 'full'
 
+// Trimmed and lowercased so "Landing" or a pasted trailing newline in the
+// Vercel UI doesn't silently fall back to the full site.
 export const SITE_MODE: SiteMode =
-  process.env.NEXT_PUBLIC_SITE_MODE === 'landing' ? 'landing' : 'full'
+  process.env.NEXT_PUBLIC_SITE_MODE?.trim().toLowerCase() === 'landing' ? 'landing' : 'full'
 
 export const isLanding = SITE_MODE === 'landing'

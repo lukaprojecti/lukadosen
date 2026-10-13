@@ -5,6 +5,7 @@
  * vars are remapped too, so /legal and the 404 follow the dark palette.
  */
 html[data-site-mode="landing"] {
+  color-scheme: dark;
   --canvas: #0e1411;
   --ink: #0f2318;
   --mint: #73e2a7;

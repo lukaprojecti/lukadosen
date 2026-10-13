@@ -63,7 +63,7 @@ html[data-site-mode="landing"],
 html[data-site-mode="landing"] body {
   height: auto;
   overflow: auto;
-  background: #0E1411; /* Projecti canvas */
+  background: var(--canvas); /* from landing-tokens.css */
 }
 
 body {
