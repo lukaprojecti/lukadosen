@@ -10,9 +10,8 @@ export type LandingLink = {
 };
 
 export const landingContent = {
-  // Swap to "/2026-portrait-luka-mint.jpg" once the file is in /public.
   portrait: {
-    src: "/2026-portrait-luka-square.jpg",
+    src: "/2026-portrait-luka-mint.jpg",
     alt: "Luka Došen, Planung von Wohnbauprojekten",
   },
   eyebrow: "Hoi, Luka hier",
