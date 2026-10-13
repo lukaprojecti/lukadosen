@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# lukadosen.ch
 
-## Getting Started
+Personal website of Luka Došen. Next.js 15 (App Router) with Payload CMS 3 on Postgres (Supabase), Tailwind 4, deployed on Vercel.
 
-First, run the development server:
+- Public site: `src/app/(frontend)/` (home, about, letters, legal)
+- Payload admin and API: `src/app/(payload)/` (`/admin`, `/api`)
+- Letters and newsletter subscribers live in Payload collections
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. Before pushing, run a clean build (Vercel lints everything):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+rm -rf .next && npm run lint && npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Site Mode
 
-## Learn More
+The site has two modes, switched with one environment variable:
 
-To learn more about Next.js, take a look at the following resources:
+| `NEXT_PUBLIC_SITE_MODE` | What it shows |
+|---|---|
+| `full` (default, also when unset) | The complete site: home with newsletter, about, letters, subscribe forms |
+| `landing` | A single German landing page (portrait, title, short text, three links). `/about` and `/letters/*` redirect to `/` with a temporary 307. `/legal`, `/admin` and `/api` keep working. The sitemap lists only `/`. |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Nothing is deleted in landing mode. All pages, Payload collections and data stay in place and come back when the mode is switched to `full`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Texts and links of the landing page live in `src/lib/landingContent.ts`.
 
-## Deploy on Vercel
+### Switching on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Vercel → project → Settings → Environment Variables: set `NEXT_PUBLIC_SITE_MODE` to `landing` (Production only, so preview deployments stay `full`).
+2. Deployments → latest Production deployment → **Redeploy**.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To switch back, set the variable to `full` (or delete it) and redeploy.
+
+`NEXT_PUBLIC_*` variables are inlined at build time, so a change only takes effect after a redeploy.
+
+### Testing locally
+
+```bash
+NEXT_PUBLIC_SITE_MODE=landing npm run build && npm start
+```
