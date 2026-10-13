@@ -58,6 +58,14 @@ body {
   overflow: hidden;
 }
 
+/* Landing mode scrolls the window (no .content-panel). */
+html[data-site-mode="landing"],
+html[data-site-mode="landing"] body {
+  height: auto;
+  overflow: auto;
+  background: #0E1411; /* Projecti canvas */
+}
+
 body {
   background: var(--base);
   color: var(--foreground);

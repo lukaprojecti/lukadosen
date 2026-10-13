@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import localFont from "next/font/local";
 import "./globals.css";
+import "./landing-tokens.css";
 import Sidebar from "@/components/Sidebar";
 import SmoothScroll from "@/components/SmoothScroll";
 import { getPayload } from "payload";
 import configPromise from "@payload-config";
+import { SITE_MODE, isLanding } from "@/lib/siteMode";
 import { SITE_NAME, SITE_URL, OG_IMAGE, HOME_TITLE, HOME_DESCRIPTION } from "@/lib/seo";
 
 const nohemi = localFont({
@@ -49,6 +51,38 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const GA_ID = "G-E1M4KN3KLQ";
+
+  // Google Analytics (gtag.js) — production only, so local/preview
+  // traffic doesn't pollute the data. Active in both site modes.
+  const analytics =
+    process.env.NODE_ENV === "production" ? (
+      <>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');`}
+        </Script>
+      </>
+    ) : null;
+
+  // Landing mode: no sidebar, no smooth scroll, no Payload query.
+  if (isLanding) {
+    return (
+      <html lang="de-CH" data-site-mode={SITE_MODE}>
+        <body className={`${nohemi.variable} antialiased`}>
+          {analytics}
+          {children}
+        </body>
+      </html>
+    );
+  }
+
   // Fetch published letters count for the sidebar badge
   let lettersCount = 0;
   try {
@@ -63,27 +97,10 @@ export default async function RootLayout({
     // Payload not yet ready (e.g. first boot / build time) — show no count
   }
 
-  const GA_ID = "G-E1M4KN3KLQ";
-
   return (
-    <html lang="en">
+    <html lang="en" data-site-mode={SITE_MODE}>
       <body className={`${nohemi.variable} antialiased`}>
-        {/* Google Analytics (gtag.js) — production only, so local/preview
-            traffic doesn't pollute the data. */}
-        {process.env.NODE_ENV === "production" && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="gtag-init" strategy="afterInteractive">
-              {`window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${GA_ID}');`}
-            </Script>
-          </>
-        )}
+        {analytics}
 
         <SmoothScroll />
         <Sidebar lettersCount={lettersCount} />
