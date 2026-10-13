@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -47,6 +47,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Dark browser chrome (mobile address bar) on the landing page.
+export const viewport: Viewport = isLanding ? { themeColor: "#0e1411" } : {};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -54,10 +57,11 @@ export default async function RootLayout({
 }>) {
   const GA_ID = "G-E1M4KN3KLQ";
 
-  // Google Analytics (gtag.js) — production only, so local/preview
-  // traffic doesn't pollute the data. Active in both site modes.
+  // Google Analytics (gtag.js) — Vercel production only. NODE_ENV is also
+  // "production" on preview builds, so it can't tell them apart.
+  // Active in both site modes.
   const analytics =
-    process.env.NODE_ENV === "production" ? (
+    process.env.VERCEL_ENV === "production" ? (
       <>
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}

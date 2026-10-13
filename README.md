@@ -41,8 +41,12 @@ To switch back, set the variable to `full` (or delete it) and redeploy.
 
 `NEXT_PUBLIC_*` variables are inlined at build time, so a change only takes effect after a redeploy.
 
+Rollbacks (Vercel Instant Rollback or promoting an older deployment) reuse that deployment's build, so they also bring back its mode. Check the mode after any rollback: the page's `<html>` tag carries `data-site-mode="landing"` or `"full"`.
+
 ### Testing locally
 
 ```bash
 NEXT_PUBLIC_SITE_MODE=landing npm run build && npm start
 ```
+
+Careful: the local `.env` points at the production database, so local servers (and `/admin` on localhost) read and write live data.

@@ -5,11 +5,6 @@
   color: var(--fg);
 }
 
-/* The legal page's own footer links to full-site pages and uses a dark logo. */
-.shell footer {
-  display: none !important; /* overrides its inline display:flex */
-}
-
 .back {
   display: inline-block;
   font-size: 14px;
