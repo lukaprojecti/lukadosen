@@ -115,7 +115,8 @@
 
 .secondary {
   background: transparent;
-  border: 1px solid var(--border);
+  /* Mint like the link underlines, so the outline stays visible over the glow. */
+  border: 1.5px solid var(--mint);
   color: var(--fg);
 }
 
@@ -125,12 +126,12 @@
 
 .secondary:hover,
 .secondary:focus-visible {
-  border-color: var(--mint);
+  background: rgba(115, 226, 167, 0.1); /* --mint at 10% */
 }
 
 .primary {
   background: var(--mint);
-  border: 1px solid var(--mint);
+  border: 1.5px solid var(--mint); /* same height as the outline buttons */
   color: var(--ink);
 }
 
