@@ -17,7 +17,7 @@ export function LandingFooter() {
 
 export default function LandingPage() {
   return (
-    <div className={styles.page}>
+    <div className={styles.page} data-schimmer>
       <main className={styles.main}>
         <Image
           src={c.portrait.src}

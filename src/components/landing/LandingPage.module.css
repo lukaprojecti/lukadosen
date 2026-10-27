@@ -2,7 +2,7 @@
 
 .page {
   position: relative;
-  isolation: isolate; /* keeps ::before above the body background */
+  isolation: isolate; /* keeps the glow (data-schimmer, landing-tokens.css) above the body background */
   min-height: 100svh;
   max-width: 640px;
   margin: 0 auto;
@@ -13,22 +13,6 @@
   font-family: var(--font-nohemi), "Outfit", system-ui, sans-serif;
   font-weight: 300;
   letter-spacing: 0.03em;
-}
-
-/* Soft light that drifts slowly around the bottom right corner. */
-.page::before {
-  content: "";
-  position: fixed;
-  left: calc(78vw - 72vmax);
-  top: calc(100vh - 72vmax);
-  width: 144vmax;
-  height: 144vmax;
-  background: var(--schimmer);
-  transform: translate(var(--schimmer-x), var(--schimmer-y));
-  animation: var(--schimmer-motion);
-  will-change: transform;
-  pointer-events: none;
-  z-index: -1;
 }
 
 .main {

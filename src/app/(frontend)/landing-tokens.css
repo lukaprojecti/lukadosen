@@ -13,19 +13,13 @@ html[data-site-mode="landing"] {
   --fg: #f2f7f0;
   --muted: #9fb2a6;
   --border: #24322b;
-  /* Soft green light, drawn on a 144vmax square whose center sits at the
-     bottom right (78vw, 100vh). See the .page / .shell ::before rules. */
+  /* Soft green light for the moving glow below. */
   --schimmer: radial-gradient(
     circle closest-side,
     rgba(115, 226, 167, 0.2) 0%,
     rgba(28, 124, 84, 0.09) 58%,
     rgba(28, 124, 84, 0) 100%
   );
-  /* Two out-of-sync drifts plus a slow pulse, so the path never repeats. */
-  --schimmer-motion:
-    schimmer-x 14s ease-in-out infinite alternate,
-    schimmer-y 10s ease-in-out infinite alternate,
-    schimmer-breathe 7s ease-in-out infinite alternate;
 
   --base: var(--canvas);
   --background: var(--canvas);
@@ -34,33 +28,47 @@ html[data-site-mode="landing"] {
   --accent: var(--ink);
 }
 
+/*
+ * Moving glow behind every landing layout that sets `data-schimmer`
+ * (landing page, 404, /legal). A 144vmax square whose center starts at the
+ * bottom right (78vw, 100vh) and sweeps toward the middle of the screen.
+ * Sideways (14s), up/down (10s) and a size pulse (7s) run out of sync, so
+ * the path never repeats. Each uses its own compositor-friendly property
+ * (translate, transform, scale), so the GPU animates it without per-frame
+ * style work. The parent needs `isolation: isolate` to keep this above the
+ * body background.
+ */
+html[data-site-mode="landing"] [data-schimmer]::before {
+  content: "";
+  position: fixed;
+  left: calc(78vw - 72vmax);
+  top: calc(100vh - 72vmax);
+  width: 144vmax;
+  height: 144vmax;
+  background: var(--schimmer);
+  animation:
+    schimmer-x 14s ease-in-out infinite alternate,
+    schimmer-y 10s ease-in-out infinite alternate,
+    schimmer-breathe 7s ease-in-out infinite alternate;
+  will-change: translate, transform, scale;
+  pointer-events: none;
+  z-index: -1;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  html[data-site-mode="landing"] {
-    --schimmer-motion: none;
+  html[data-site-mode="landing"] [data-schimmer]::before {
+    animation: none;
   }
 }
 
-/* Moving glow. Registered so the offsets can animate independently. */
-@property --schimmer-x {
-  syntax: "<length-percentage>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --schimmer-y {
-  syntax: "<length-percentage>";
-  inherits: false;
-  initial-value: 0px;
-}
-
 @keyframes schimmer-x {
-  from { --schimmer-x: 10vw; }
-  to { --schimmer-x: -62vw; }
+  from { translate: 10vw 0; }
+  to { translate: -62vw 0; }
 }
 
 @keyframes schimmer-y {
-  from { --schimmer-y: 8vh; }
-  to { --schimmer-y: -48vh; }
+  from { transform: translateY(8vh); }
+  to { transform: translateY(-48vh); }
 }
 
 @keyframes schimmer-breathe {
