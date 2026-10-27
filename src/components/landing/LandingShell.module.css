@@ -1,26 +1,10 @@
 .shell {
   position: relative;
-  isolation: isolate; /* keeps ::before above the body background */
+  isolation: isolate; /* keeps the glow (data-schimmer, landing-tokens.css) above the body background */
   max-width: 720px;
   margin: 0 auto;
   padding: 48px;
   color: var(--fg);
-}
-
-/* Same drifting light as the landing page. */
-.shell::before {
-  content: "";
-  position: fixed;
-  left: calc(78vw - 72vmax);
-  top: calc(100vh - 72vmax);
-  width: 144vmax;
-  height: 144vmax;
-  background: var(--schimmer);
-  transform: translate(var(--schimmer-x), var(--schimmer-y));
-  animation: var(--schimmer-motion);
-  will-change: transform;
-  pointer-events: none;
-  z-index: -1;
 }
 
 .back {

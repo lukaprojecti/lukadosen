@@ -4,7 +4,7 @@ import styles from "./LandingShell.module.css";
 /** Padded container with a back link for /legal in landing mode. */
 export default function LandingShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className={styles.shell}>
+    <div className={styles.shell} data-schimmer>
       <Link href="/" className={styles.back}>
         ← Zurück
       </Link>

@@ -7,7 +7,7 @@ import styles from "./LandingPage.module.css";
 /** 404 in landing mode, built from the landing page's own layout and styles. */
 export default function LandingNotFound() {
   return (
-    <div className={styles.page}>
+    <div className={styles.page} data-schimmer>
       <main className={styles.main}>
         <p className={styles.eyebrow}>{c.notFound.eyebrow}</p>
         <h1 className={styles.title}>
