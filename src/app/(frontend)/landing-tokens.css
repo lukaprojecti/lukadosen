@@ -35,9 +35,14 @@ html[data-site-mode="landing"] {
  * Sideways (14s), up/down (10s) and a size pulse (7s) run out of sync, so
  * the path never repeats. Each uses its own compositor-friendly property
  * (translate, transform, scale), so the GPU animates it without per-frame
- * style work. The parent needs `isolation: isolate` to keep this above the
- * body background.
+ * style work. The wrapper becomes its own stacking context so the glow
+ * (z-index -1) stays above the body background but behind the content.
  */
+html[data-site-mode="landing"] [data-schimmer] {
+  position: relative;
+  isolation: isolate;
+}
+
 html[data-site-mode="landing"] [data-schimmer]::before {
   content: "";
   position: fixed;
@@ -58,6 +63,13 @@ html[data-site-mode="landing"] [data-schimmer]::before {
 @media (prefers-reduced-motion: reduce) {
   html[data-site-mode="landing"] [data-schimmer]::before {
     animation: none;
+    will-change: auto; /* static glow, no need to keep a GPU layer */
+  }
+}
+
+@media print {
+  html[data-site-mode="landing"] [data-schimmer]::before {
+    display: none;
   }
 }
 

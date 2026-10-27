@@ -1,8 +1,6 @@
 /* Landing page (site mode `landing`). Tokens come from landing-tokens.css. */
 
 .page {
-  position: relative;
-  isolation: isolate; /* keeps the glow (data-schimmer, landing-tokens.css) above the body background */
   min-height: 100svh;
   max-width: 640px;
   margin: 0 auto;
