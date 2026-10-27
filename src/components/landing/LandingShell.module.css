@@ -1,6 +1,4 @@
 .shell {
-  position: relative;
-  isolation: isolate; /* keeps the glow (data-schimmer, landing-tokens.css) above the body background */
   max-width: 720px;
   margin: 0 auto;
   padding: 48px;
