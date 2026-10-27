@@ -7,12 +7,18 @@
   color: var(--fg);
 }
 
-/* Same soft light from the bottom right corner as the landing page. */
+/* Same drifting light as the landing page. */
 .shell::before {
   content: "";
   position: fixed;
-  inset: 0;
+  left: calc(78vw - 72vmax);
+  top: calc(100vh - 72vmax);
+  width: 144vmax;
+  height: 144vmax;
   background: var(--schimmer);
+  transform: translate(var(--schimmer-x), var(--schimmer-y));
+  animation: var(--schimmer-motion);
+  will-change: transform;
   pointer-events: none;
   z-index: -1;
 }

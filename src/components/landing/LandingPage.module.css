@@ -15,12 +15,18 @@
   letter-spacing: 0.03em;
 }
 
-/* Soft light from the bottom right corner, across the whole viewport. */
+/* Soft light that drifts slowly around the bottom right corner. */
 .page::before {
   content: "";
   position: fixed;
-  inset: 0;
+  left: calc(78vw - 72vmax);
+  top: calc(100vh - 72vmax);
+  width: 144vmax;
+  height: 144vmax;
   background: var(--schimmer);
+  transform: translate(var(--schimmer-x), var(--schimmer-y));
+  animation: var(--schimmer-motion);
+  will-change: transform;
   pointer-events: none;
   z-index: -1;
 }
